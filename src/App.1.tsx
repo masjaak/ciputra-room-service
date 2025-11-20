@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Minus, ChevronRight, Search, Star, MapPin, Phone, X, Info, Building2, QrCode, CreditCard, ChevronLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, Minus, ChevronRight, Search, Star, MapPin, Phone, Globe, X, Info, Building2, QrCode, CreditCard, ChevronLeft } from 'lucide-react';
 
 // --- DATA MENU ---
 const MENU_ITEMS = [
@@ -60,33 +60,27 @@ const CATEGORIES = ["Appetizer", "Main Course", "Dessert", "Beverage"];
 export default function App() {
   const [view, setView] = useState('login'); 
   const [lang, setLang] = useState('EN');
-  
-  // FIX ERROR: Tambahkan <any[]> biar dia tau ini array bebas
   const [cart, setCart] = useState<any[]>([]); 
-  
   const [selectedCategory, setSelectedCategory] = useState("Main Course");
   const [showCartModal, setShowCartModal] = useState(false);
   
-  // FIX ERROR: Tambahkan <any> biar dia tau ini objek bebas
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  
   const [itemQty, setItemQty] = useState(1);
   const [itemNote, setItemNote] = useState("");
 
   const [paymentMethod, setPaymentMethod] = useState("room");
   const [loading, setLoading] = useState(false);
-  
   const [roomNumber, setRoomNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  const t = {
+  const t: any = {
     EN: {
       subtitle: "Exquisite dining, delivered to your room.",
       start: "Start Dining",
       room: "Room Number",
       phone: "Phone Number",
-      help: "Trouble logging in? Call Front Desk",
+      help: "Trouble logging in? Call Our Staff",
       search: "Search menu...",
       add: "Add",
       cart: "Your Cart",
@@ -129,9 +123,8 @@ export default function App() {
     }
   };
 
-  const txt = t[lang as keyof typeof t]; // Fix Error Indexing
+  const txt = t[lang];
 
-  // --- LOGIC ---
   const handleLogin = () => {
     if (!roomNumber || !phoneNumber) {
       setLoginError(txt.errorRequired);
@@ -141,7 +134,7 @@ export default function App() {
     setView('menu');
   };
 
-  const openItemDetail = (item: any) => { // Fix Error Parameter
+  const openItemDetail = (item: any) => {
     setSelectedItem(item);
     setItemQty(1);
     setItemNote("");
@@ -153,13 +146,12 @@ export default function App() {
     setSelectedItem(null);
   };
 
-  const removeFromCart = (index: number) => { // Fix Error Parameter
+  const removeFromCart = (index: number) => {
     const newCart = [...cart];
     newCart.splice(index, 1);
     setCart(newCart);
   };
 
-  // Fix Error: definisikan tipe item sebagai any
   const subtotal = cart.reduce((sum, item: any) => sum + (item.price * item.qty), 0);
   const taxService = subtotal * 0.21;
   const grandTotal = subtotal + taxService;
@@ -176,18 +168,28 @@ export default function App() {
     }, 2500);
   };
 
-  // --- VIEW 1: LOGIN ---
+  // --- VIEW 1: LOGIN (FULL SCREEN FIXED - NO GRAY SPACE) ---
   if (view === 'login') {
     return (
-      <div className="min-h-screen relative flex flex-col justify-center items-center p-6 font-sans overflow-hidden">
+      // UBAHAN PENTING: 'fixed inset-0' memaksa elemen nempel ke 4 sudut layar
+      <div className="fixed inset-0 w-full h-full bg-black font-sans overflow-hidden">
+        
+        {/* BACKGROUND (Paku ke layar) */}
         <div className="absolute inset-0 z-0">
-          {/* --- GANTI LINK BACKGROUND DI BAWAH INI --- */}
-          <img src="https://images.unsplash.com/photo-1763604584073-7f05efb157f9?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-full object-cover" alt="Background" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-purple-900/20 to-black/60 backdrop-blur-[2px]"></div>
+          {/* JANGAN LUPA GANTI LINK BACKGROUND HOTEL DISINI */}
+          <img 
+            src="https://images.unsplash.com/photo-1763604584073-7f05efb157f9?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            className="w-full h-full object-cover opacity-80" 
+            alt="Background" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-purple-900/30 to-black/70 backdrop-blur-[2px]"></div>
         </div>
         
-        <div className="relative z-10 w-full max-w-[280px] mx-auto">
-          <div className="flex justify-end mb-6">
+        {/* CONTAINER TENGAH (Flexbox centering) */}
+        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center px-6">
+          
+          {/* LANGUAGE TOGGLE (Absolute di pojok) */}
+          <div className="absolute top-6 right-6">
             <div className="bg-black/30 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex gap-3 text-[10px] font-medium text-white shadow-lg cursor-pointer hover:bg-black/40 transition-all">
               <span onClick={() => setLang('ID')} className={`${lang === 'ID' ? 'text-white font-bold' : 'text-white/50'}`}>ID</span>
               <span className="text-white/20">|</span>
@@ -195,68 +197,79 @@ export default function App() {
             </div>
           </div>
 
-          <div className="text-center mb-8 animate-fade-in-up">
-             {/* --- GANTI LINK LOGO DI BAWAH INI --- */}
-             <img src="https://i.ibb.co.com/JFzbjBqz/Logo-ciputra-copy.png" className="w-28 h-auto mx-auto mb-5 object-contain drop-shadow-2xl opacity-95" alt="Logo" />
+          {/* HEADER & LOGO */}
+          <div className="text-center mb-10 animate-fade-in-up w-full max-w-[280px]">
+             {/* JANGAN LUPA GANTI LINK LOGO DISINI */}
+             <img 
+               src="https://i.ibb.co.com/JFzbjBqz/Logo-ciputra-copy.png" 
+               className="w-28 h-auto mx-auto mb-6 object-contain drop-shadow-2xl opacity-95" 
+               alt="Logo" 
+             />
              
              <h1 className="text-3xl font-serif text-white drop-shadow-lg tracking-wide mb-2">The Gallery Restaurant</h1>
              <p className="text-white/90 font-light text-[10px] tracking-widest uppercase border-t border-white/30 inline-block pt-2 px-4">
                {lang === 'EN' ? 'Hotel Ciputra Semarang' : 'Hotel Ciputra Semarang'}
              </p>
-             <p className="text-white/80 text-xs mt-2 font-serif italic">"{txt.subtitle}"</p>
+             <p className="text-white/80 text-xs mt-3 font-serif italic">"{txt.subtitle}"</p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-5 py-6 rounded-[1.5rem] shadow-2xl ring-1 ring-white/30 w-full">
-            <div className="space-y-3"> 
+          {/* FORM INPUT */}
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-8 rounded-[2rem] shadow-2xl ring-1 ring-white/30 w-full max-w-[300px]">
+            <div className="space-y-4"> 
               <div className="group">
-                <label className="text-[8px] font-bold text-white/80 tracking-[0.2em] uppercase mb-1 block ml-2">{txt.room}</label>
+                <label className="text-[9px] font-bold text-white/80 tracking-[0.2em] uppercase mb-1.5 block ml-3">{txt.room}</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MapPin className="h-3.5 w-3.5 text-white/70" />
+                    <MapPin className="h-4 w-4 text-white/70" />
                   </div>
                   <input 
                     type="number" 
                     placeholder="1024" 
                     value={roomNumber}
                     onChange={(e) => setRoomNumber(e.target.value)}
-                    className="block w-full pl-8 pr-3 py-2.5 bg-black/20 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm" 
+                    className="block w-full pl-9 pr-3 py-3 bg-black/20 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm font-medium" 
                   />
                 </div>
               </div>
+
               <div className="group">
-                <label className="text-[8px] font-bold text-white/80 tracking-[0.2em] uppercase mb-1 block ml-2">{txt.phone}</label>
+                <label className="text-[9px] font-bold text-white/80 tracking-[0.2em] uppercase mb-1.5 block ml-3">{txt.phone}</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Phone className="h-3.5 w-3.5 text-white/70" />
+                    <Phone className="h-4 w-4 text-white/70" />
                   </div>
                   <input 
                     type="tel" 
                     placeholder="081..." 
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="block w-full pl-8 pr-3 py-2.5 bg-black/20 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm" 
+                    className="block w-full pl-9 pr-3 py-3 bg-black/20 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm font-medium" 
                   />
                 </div>
               </div>
               
-              {/* Error Message */}
               {loginError && (
-                <p className="text-red-300 text-[10px] text-center font-bold bg-red-900/30 py-1 rounded">{loginError}</p>
+                <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-2 animate-pulse">
+                  <p className="text-red-100 text-[10px] text-center font-bold tracking-wide">{loginError}</p>
+                </div>
               )}
 
-              <div className="pt-2 flex justify-center">
+              <div className="pt-2">
                 <button 
                   onClick={handleLogin} 
-                  className="w-auto px-8 bg-white text-slate-900 py-2.5 rounded-full font-bold text-[10px] shadow-lg hover:bg-slate-100 hover:shadow-xl active:scale-95 transition-all uppercase tracking-[0.2em]"
+                  className={`w-full py-3 rounded-xl font-bold text-[10px] shadow-lg active:scale-95 transition-all uppercase tracking-[0.2em] ${!roomNumber || !phoneNumber ? 'bg-white/20 text-white/50 cursor-not-allowed' : 'bg-white text-slate-900 hover:bg-slate-100 hover:shadow-xl'}`}
                 >
                   {txt.start}
                 </button>
               </div>
               
-              <p className="text-center text-[9px] text-white/50 mt-3 cursor-pointer hover:text-white hover:underline transition-all">{txt.help}</p>
+              <p className="text-center text-[9px] text-white/50 mt-2 cursor-pointer hover:text-white hover:underline transition-all">{txt.help}</p>
             </div>
           </div>
-          <div className="text-center mt-8"><p className="text-[8px] text-white/30 uppercase tracking-widest">© 2025 Swiss-Belhotel International</p></div>
+          
+          <div className="absolute bottom-6 text-center w-full left-0">
+             <p className="text-[8px] text-white/30 uppercase tracking-widest">© 2025 Swiss-Belhotel International</p>
+          </div>
         </div>
       </div>
     );
@@ -295,8 +308,7 @@ export default function App() {
 
         <div className="p-6 space-y-8">
           <div className="flex items-center justify-between"><h3 className="font-bold text-lg text-slate-900">Featured Menu</h3><span className="text-xs text-orange-600 font-bold cursor-pointer">View All</span></div>
-
-          {MENU_ITEMS.filter(item => item.category === selectedCategory).map((item) => (
+          {MENU_ITEMS.filter(item => item.category === selectedCategory).map((item: any) => (
             <div key={item.id} className="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/60 border border-slate-100 group">
               <div className="relative h-64 w-full">
                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -309,11 +321,9 @@ export default function App() {
                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       
-                      {/* --- TOMBOL ADD DENGAN SVG MANUAL --- */}
+                      {/* --- TOMBOL ADD (PAKE TEXT MANUAL BIAR MUNCUL!) --- */}
                       <button onClick={() => openItemDetail(item)} className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-orange-500/40 hover:scale-110 active:scale-90 transition-transform">
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6">
-                           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                         </svg>
+                         <span className="text-2xl font-light pb-1 leading-none">+</span>
                       </button>
 
                       <p className="font-bold text-lg text-slate-900">Rp {item.price.toLocaleString()}</p>
@@ -334,36 +344,29 @@ export default function App() {
           </div>
         )}
 
-        {/* --- ITEM DETAIL MODAL --- */}
         {selectedItem && (
           <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in">
             <div className="bg-white w-full rounded-t-[2.5rem] p-8 max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl">
                <div className="flex justify-between items-start mb-6">
-                 <div>
-                   <h2 className="text-2xl font-serif font-bold text-slate-900 mb-1">{selectedItem.name}</h2>
-                   <p className="text-orange-600 font-bold text-lg">Rp {selectedItem.price.toLocaleString()}</p>
-                 </div>
+                 <div><h2 className="text-2xl font-serif font-bold text-slate-900 mb-1">{selectedItem.name}</h2><p className="text-orange-600 font-bold text-lg">Rp {selectedItem.price.toLocaleString()}</p></div>
                  <button onClick={() => setSelectedItem(null)} className="p-2 bg-slate-100 rounded-full"><X className="w-6 h-6 text-slate-500" /></button>
                </div>
+               {selectedItem.allergens && (<div className="bg-orange-50 p-4 rounded-2xl mb-6 flex gap-3 items-start"><Info className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" /><div><p className="text-xs font-bold text-orange-800 uppercase tracking-wider mb-1">Contains Allergens</p><p className="text-xs text-orange-700">{selectedItem.allergens}</p></div></div>)}
                
-               {selectedItem.allergens && (
-                 <div className="bg-orange-50 p-4 rounded-2xl mb-6 flex gap-3 items-start">
-                   <Info className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-                   <div><p className="text-xs font-bold text-orange-800 uppercase tracking-wider mb-1">Contains Allergens</p><p className="text-xs text-orange-700">{selectedItem.allergens}</p></div>
-                 </div>
-               )}
-
+               {/* NOTES INPUT (WARNA GELAP BIAR KELIATAN) */}
                <div className="mb-8">
                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">{txt.addNote}</label>
-                 <textarea className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm focus:outline-none focus:border-orange-500 transition-all" rows={3} placeholder="E.g. No onions, extra spicy..." value={itemNote} onChange={(e) => setItemNote(e.target.value)}></textarea>
+                 <textarea className="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-2xl p-4 text-sm focus:outline-none focus:border-orange-500 transition-all" rows={3} placeholder="E.g. No onions, extra spicy..." value={itemNote} onChange={(e) => setItemNote(e.target.value)}></textarea>
                </div>
 
                <div className="flex gap-4 items-center">
                  <div className="flex items-center bg-slate-100 rounded-full p-1">
-                   <button onClick={() => setItemQty(Math.max(1, itemQty - 1))} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-slate-900 font-bold hover:bg-slate-50"><Minus className="w-4 h-4" /></button>
+                   <button onClick={() => setItemQty(Math.max(1, itemQty - 1))} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-slate-900 font-bold hover:bg-slate-50">
+                     <span className="text-lg leading-none pb-1">-</span>
+                   </button>
                    <span className="w-12 text-center font-bold text-slate-900">{itemQty}</span>
                    <button onClick={() => setItemQty(itemQty + 1)} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-slate-900 font-bold hover:bg-slate-50">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                     <span className="text-lg leading-none pb-1">+</span>
                    </button>
                  </div>
                  <button onClick={addItemToCart} className="flex-1 bg-slate-900 text-white py-4 rounded-full font-bold text-sm shadow-xl hover:bg-slate-800 active:scale-95 transition-all">Add to Cart - Rp {(selectedItem.price * itemQty).toLocaleString()}</button>
@@ -376,28 +379,19 @@ export default function App() {
         {showCartModal && (
           <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in">
              <div className="bg-white w-full rounded-t-[2.5rem] p-8 max-h-[85vh] overflow-y-auto animate-slide-up shadow-2xl">
-               <div className="flex justify-between items-center mb-8">
-                 <h2 className="text-2xl font-serif font-bold text-slate-900">{txt.cart}</h2>
-                 <button onClick={() => setShowCartModal(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-all"><X className="w-6 h-6 text-slate-400" /></button>
-               </div>
+               <div className="flex justify-between items-center mb-8"><h2 className="text-2xl font-serif font-bold text-slate-900">{txt.cart}</h2><button onClick={() => setShowCartModal(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-all"><X className="w-6 h-6 text-slate-400" /></button></div>
                <div className="space-y-6 mb-8">
                  {cart.map((item: any, idx: number) => (
                    <div key={idx} className="flex justify-between items-start border-b border-slate-50 pb-4 last:border-0">
                       <div className="flex items-start gap-4">
                         <div className="w-16 h-16 rounded-2xl bg-slate-100 overflow-hidden shadow-sm"><img src={item.image} className="w-full h-full object-cover" /></div>
-                        <div>
-                          <h4 className="font-bold text-slate-900 text-sm mb-1">{item.name} <span className="text-slate-400 text-xs">x{item.qty}</span></h4>
-                          <p className="text-xs font-bold text-orange-600">Rp {(item.price * item.qty).toLocaleString()}</p>
-                          {item.note && <p className="text-[10px] text-slate-400 mt-1 italic bg-slate-50 px-2 py-1 rounded-md inline-block">" {item.note} "</p>}
-                        </div>
+                        <div><h4 className="font-bold text-slate-900 text-sm mb-1">{item.name} <span className="text-slate-400 text-xs">x{item.qty}</span></h4><p className="text-xs font-bold text-orange-600">Rp {(item.price * item.qty).toLocaleString()}</p>{item.note && <p className="text-[10px] text-slate-400 mt-1 italic bg-slate-50 px-2 py-1 rounded-md inline-block">" {item.note} "</p>}</div>
                       </div>
                       <button onClick={() => removeFromCart(idx)} className="text-red-500 bg-red-50 px-3 py-1.5 rounded-full text-[10px] font-bold hover:bg-red-100 transition-colors">Remove</button>
                    </div>
                  ))}
                </div>
-               <div className="bg-slate-50 rounded-2xl p-6 mb-6">
-                 <div className="flex justify-between text-lg font-bold text-slate-900"><span>Total Payment</span><span>Rp {grandTotal.toLocaleString()}</span></div>
-               </div>
+               <div className="bg-slate-50 rounded-2xl p-6 mb-6"><div className="flex justify-between text-lg font-bold text-slate-900"><span>Total Payment</span><span>Rp {grandTotal.toLocaleString()}</span></div></div>
                <button onClick={() => { setShowCartModal(false); setView('checkout'); }} className="w-full bg-orange-600 text-white py-4 rounded-2xl font-bold text-sm shadow-xl shadow-orange-500/30 hover:bg-orange-700 active:scale-95 transition-all uppercase tracking-widest flex justify-center items-center gap-2">{txt.checkout}</button>
              </div>
           </div>
@@ -441,25 +435,16 @@ export default function App() {
               </label>
             </div>
             
-            {paymentMethod === 'qris' && (
-               <div className="mt-4 p-4 bg-white border border-slate-200 rounded-xl flex flex-col items-center text-center animate-fade-in">
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" className="w-32 h-32 opacity-80" />
-                 <p className="text-[10px] text-slate-400 mt-2">Scan to Pay</p>
-               </div>
-            )}
+            {paymentMethod === 'qris' && (<div className="mt-4 p-4 bg-white border border-slate-200 rounded-xl flex flex-col items-center text-center animate-fade-in"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" className="w-32 h-32 opacity-80" /><p className="text-[10px] text-slate-400 mt-2">Scan to Pay</p></div>)}
           </div>
 
           <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
             <h3 className="font-bold text-slate-900 mb-4">{txt.summary}</h3>
             <div className="space-y-4 mb-6 border-b border-slate-100 pb-6">
               {cart.map((item: any, idx: number) => (
-                <div key={idx} className="flex justify-between text-sm">
-                  <span className="text-slate-600">{item.qty}x {item.name}</span>
-                  <span className="font-bold">Rp {(item.price * item.qty).toLocaleString()}</span>
-                </div>
+                <div key={idx} className="flex justify-between text-sm"><span className="text-slate-600">{item.qty}x {item.name}</span><span className="font-bold">Rp {(item.price * item.qty).toLocaleString()}</span></div>
               ))}
             </div>
-            
             <div className="space-y-2 text-sm">
               <div className="flex justify-between text-slate-500"><span>{txt.subtotal}</span><span>Rp {subtotal.toLocaleString()}</span></div>
               <div className="flex justify-between text-slate-500"><span>{txt.tax}</span><span>Rp {taxService.toLocaleString()}</span></div>
@@ -469,9 +454,7 @@ export default function App() {
         </div>
 
         <div className="fixed bottom-8 left-6 right-6 z-40">
-           <button onClick={handleOrder} disabled={loading} className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-sm shadow-xl active:scale-95 transition-all flex justify-center items-center gap-2">
-              {loading ? <span className="animate-spin">⏳</span> : txt.placeOrder}
-           </button>
+           <button onClick={handleOrder} disabled={loading} className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-sm shadow-xl active:scale-95 transition-all flex justify-center items-center gap-2">{loading ? <span className="animate-spin">⏳</span> : txt.placeOrder}</button>
         </div>
       </div>
     );
@@ -481,9 +464,7 @@ export default function App() {
   if (view === 'success') {
     return (
       <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-8 text-center font-sans">
-        <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-green-200 shadow-2xl mb-8 animate-bounce">
-          <Star className="w-12 h-12 text-white fill-white" />
-        </div>
+        <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-green-200 shadow-2xl mb-8 animate-bounce"><Star className="w-12 h-12 text-white fill-white" /></div>
         <h2 className="text-3xl font-serif font-bold text-slate-900 mb-3">{txt.successTitle}</h2>
         <p className="text-slate-500 mb-10 leading-relaxed max-w-xs mx-auto">{txt.successMsg}</p>
         <button onClick={() => setView('login')} className="px-10 py-4 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm uppercase tracking-widest">{txt.back}</button>
