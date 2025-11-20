@@ -1,8 +1,3 @@
-import { useEffect } from 'react';
-import {
-  ShoppingCart,
-  Globe,
-} from 'lucide-react';
 
 // --- DATA MENU ---
 export const MENU_ITEMS = [
