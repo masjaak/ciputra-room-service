@@ -627,12 +627,13 @@ export default function App() {
     );
   }
 
-  // --- VIEW 2: MENU ---
+  // --- VIEW 2: MENU (REVISI LAYOUT RESPONSIF) ---
   if (view === 'menu') {
     return (
       <div className="min-h-screen bg-slate-50 font-sans pb-32 flex justify-center overflow-x-hidden">
         <div className="w-full max-w-md bg-slate-50 min-h-screen shadow-2xl relative">
             
+            {/* HEADER STICKY */}
             <div className="bg-white sticky top-0 z-30 px-6 pt-8 pb-4 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
               <div className="flex items-center justify-between mb-6">
                  <div>
@@ -642,42 +643,54 @@ export default function App() {
                  <div className="w-10 h-10 bg-orange-50 rounded-full overflow-hidden border border-orange-100"><img src={`https://api.dicebear.com/7.x/initials/svg?seed=${roomNumber}`} alt="user" /></div>
               </div>
 
+              {/* CATEGORY TABS */}
               <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
                 {CATEGORIES.map(cat => (
-                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${selectedCategory === cat ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'}`}>{cat}</button>
+                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${selectedCategory === cat ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'}`}>{cat}</button>
                 ))}
               </div>
             </div>
 
-            <div className="p-6 space-y-6">
+            {/* LIST MENU ITEMS (NEW LAYOUT) */}
+            <div className="p-5 space-y-5">
               {MENU_ITEMS.filter(item => item.category === selectedCategory).map((item: any) => (
-                <div key={item.id} className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-slate-100 flex h-32 relative group active:scale-[0.99] transition-transform" onClick={() => openItemDetail(item)}>
-                  <div className="w-32 h-full flex-shrink-0">
-                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                // FIX: Layout diubah jadi padding-inside, bukan full-bleed image
+                <div key={item.id} onClick={() => openItemDetail(item)} className="bg-white p-3 rounded-[1.5rem] shadow-sm border border-slate-100 flex gap-4 items-start active:scale-[0.98] transition-transform cursor-pointer group">
+                  
+                  {/* IMAGE KIRI (SQUARE ROUNDED) */}
+                  <div className="w-24 h-24 flex-shrink-0 rounded-2xl overflow-hidden bg-slate-100 shadow-inner relative">
+                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" 
+                          onError={(e) => {e.currentTarget.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'}} // Fallback image
+                     />
+                     {item.tag && <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-1 text-center"><span className="text-[8px] font-bold text-white uppercase tracking-wider block">{item.tag}</span></div>}
                   </div>
-                  <div className="p-4 flex flex-col justify-between flex-1">
+
+                  {/* TEXT KANAN */}
+                  <div className="flex-1 flex flex-col justify-between min-h-[6rem]">
                      <div>
-                        <div className="flex justify-between items-start">
-                             <h3 className="font-serif font-bold text-slate-900 leading-tight mb-1 line-clamp-1">{item.name}</h3>
-                             {item.tag && <span className="text-[8px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded uppercase">{item.tag}</span>}
-                        </div>
-                        <p className="text-[10px] text-slate-400 leading-tight line-clamp-2">{item.description}</p>
+                        <h3 className="font-serif font-bold text-slate-900 leading-tight mb-1 text-[15px] line-clamp-2">{item.name}</h3>
+                        <p className="text-[10px] text-slate-400 leading-relaxed line-clamp-2">{item.description}</p>
                      </div>
+                     
                      <div className="flex items-end justify-between mt-2">
                         <p className="font-bold text-sm text-slate-900">{item.price === 0 ? txt.free : `Rp ${item.price.toLocaleString()}`}</p>
-                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-900 hover:bg-orange-600 hover:text-white transition-colors">
+                        {/* Tombol Plus Kecil Visual */}
+                        <div className="w-7 h-7 bg-slate-50 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors">
                            <Plus className="w-4 h-4" />
                         </div>
                      </div>
                   </div>
                 </div>
               ))}
+              {/* Spacer biar item terakhir gak ketutup tombol cart */}
+              <div className="h-20"></div>
             </div>
 
+            {/* FLOATING CART BUTTON */}
             {cart.length > 0 && (
               <div className="fixed bottom-8 left-0 right-0 z-40 animate-slide-up flex justify-center pointer-events-none">
                 <div className="w-full max-w-md px-6 pointer-events-auto">
-                    <button onClick={() => setShowCartModal(true)} className="w-full bg-slate-900 text-white p-2 pr-6 rounded-full shadow-2xl shadow-slate-900/30 flex justify-between items-center">
+                    <button onClick={() => setShowCartModal(true)} className="w-full bg-slate-900 text-white p-2 pr-6 rounded-full shadow-2xl shadow-slate-900/30 flex justify-between items-center ring-4 ring-white">
                        <div className="flex items-center gap-4"><div className="w-10 h-10 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold text-sm">{cart.length}</div><div className="text-left"><p className="text-[9px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">{txt.total}</p><p className="font-bold text-sm">Rp {grandTotal.toLocaleString()}</p></div></div>
                        <div className="flex items-center gap-2 font-bold text-xs tracking-widest uppercase">{txt.cart} <ChevronRight className="w-4 h-4" /></div>
                     </button>
@@ -685,7 +698,7 @@ export default function App() {
               </div>
             )}
 
-            {/* ITEM DETAIL MODAL */}
+            {/* ITEM DETAIL MODAL (SAMA SEPERTI SEBELUMNYA) */}
             {selectedItem && (
               <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center">
                 <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 animate-slide-up shadow-2xl max-h-[90vh] overflow-y-auto">
@@ -728,6 +741,7 @@ export default function App() {
               </div>
             )}
 
+            {/* CART MODAL (SAMA SEPERTI SEBELUMNYA) */}
             {showCartModal && (
               <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center">
                  <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 max-h-[85vh] overflow-y-auto animate-slide-up shadow-2xl">
@@ -756,80 +770,94 @@ export default function App() {
     );
   }
 
-  // --- VIEW 3: CHECKOUT ---
+  // --- VIEW 3: CHECKOUT (FIX 100% FULL WIDTH - NO GAP) ---
   if (view === 'checkout') {
     return (
-      <div className="min-h-screen bg-slate-50 font-sans pb-32 flex justify-center overflow-x-hidden">
-        <div className="w-full max-w-md bg-slate-50 min-h-screen shadow-2xl relative">
-            <div className="bg-white sticky top-0 z-30 px-6 pt-6 pb-4 shadow-sm flex items-center gap-4">
-              <button onClick={() => setView('menu')} className="p-2 bg-slate-100 rounded-full"><ChevronLeft className="w-5 h-5" /></button>
-              <h2 className="text-lg font-bold">{txt.checkout}</h2>
+      <div className="min-h-screen bg-slate-50 font-sans pb-32 w-full">
+        
+        {/* FIX: Hapus 'md:max-w-md md:mx-auto'. Ganti jadi 'w-full' mutlak */}
+        <div className="w-full bg-slate-50 min-h-screen relative">
+            
+            {/* HEADER */}
+            <div className="bg-white sticky top-0 z-30 px-6 pt-6 pb-4 shadow-sm flex items-center gap-4 w-full">
+              <button onClick={() => setView('menu')} className="group flex items-center gap-3 pl-2 pr-5 py-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-all active:scale-95">
+                 <div className="bg-white p-1.5 rounded-full shadow-sm border border-slate-200 group-hover:border-orange-200">
+                    <ChevronLeft className="w-4 h-4 text-slate-900" />
+                 </div>
+                 <span className="text-xs font-bold text-slate-700 uppercase tracking-wider group-hover:text-slate-900">Back to Menu</span>
+              </button>
+              <div className="flex-1 text-right">
+                 <h2 className="text-lg font-bold font-serif text-slate-900">{txt.checkout}</h2>
+              </div>
             </div>
 
-            <div className="p-6 space-y-6">
-              <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+            {/* CONTENT */}
+            <div className="p-6 space-y-6 w-full">
+              <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 w-full">
                  <h3 className="font-bold text-slate-900 mb-4">Payment Method</h3>
                  <div className="space-y-3">
                     {/* OPTION 1: Room Charge */}
-                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'room' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
+                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all w-full ${paymentMethod === 'room' ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}>
                         <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'room'} onChange={() => setPaymentMethod('room')} />
-                        <Building2 className={`w-5 h-5 ${paymentMethod === 'room' ? 'text-orange-600' : 'text-slate-400'}`} />
+                        <Building2 className={`w-6 h-6 flex-shrink-0 ${paymentMethod === 'room' ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-bold text-sm text-slate-900">Charge to Room</span>
                     </label>
 
                     {/* OPTION 2: QRIS */}
-                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'qris' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
+                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all w-full ${paymentMethod === 'qris' ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}>
                         <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'qris'} onChange={() => setPaymentMethod('qris')} />
-                        <QrCode className={`w-5 h-5 ${paymentMethod === 'qris' ? 'text-orange-600' : 'text-slate-400'}`} />
+                        <QrCode className={`w-6 h-6 flex-shrink-0 ${paymentMethod === 'qris' ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-bold text-sm text-slate-900">QRIS / E-Wallet</span>
                     </label>
 
                     {/* OPTION 3: Transfer */}
-                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'bank' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
+                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all w-full ${paymentMethod === 'bank' ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}>
                         <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'bank'} onChange={() => setPaymentMethod('bank')} />
-                        <CreditCard className={`w-5 h-5 ${paymentMethod === 'bank' ? 'text-orange-600' : 'text-slate-400'}`} />
+                        <CreditCard className={`w-6 h-6 flex-shrink-0 ${paymentMethod === 'bank' ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-bold text-sm text-slate-900">Bank Transfer</span>
                     </label>
                  </div>
 
                  {paymentMethod === 'bank' && (
-                     <div className="mt-4 animate-fade-in pl-2">
+                     <div className="mt-4 animate-fade-in pl-2 w-full">
                          <p className="text-xs font-bold text-slate-400 uppercase mb-2">Select Bank</p>
-                         <div className="flex gap-2 mb-4">
+                         <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar pb-1 w-full">
                              {BANKS.map(bank => (
-                                 <button key={bank.id} onClick={() => setSelectedBank(bank.id)} className={`px-4 py-2 rounded-lg border text-xs font-bold ${selectedBank === bank.id ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200'}`}>{bank.name}</button>
+                                 <button key={bank.id} onClick={() => setSelectedBank(bank.id)} className={`px-4 py-2 rounded-lg border text-xs font-bold whitespace-nowrap ${selectedBank === bank.id ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200'}`}>{bank.name}</button>
                              ))}
                          </div>
                          {selectedBank && (
-                             <div className="bg-slate-50 p-3 rounded-lg text-center mb-4 border border-slate-200">
+                             <div className="bg-slate-50 p-3 rounded-lg text-center mb-4 border border-slate-200 w-full">
                                  <p className="text-xs text-slate-500">Virtual Account Number</p>
-                                 <p className="text-lg font-mono font-bold text-slate-900">{BANKS.find(b => b.id === selectedBank)?.code}{phoneNumber}</p>
+                                 <p className="text-lg font-mono font-bold text-slate-900 tracking-widest">{BANKS.find(b => b.id === selectedBank)?.code}{phoneNumber}</p>
                              </div>
                          )}
                      </div>
                  )}
 
                  {paymentMethod === 'qris' && (
-                     <div className="mt-4 animate-fade-in bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center text-center">
-                         <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" className="w-32 h-32 opacity-80 mix-blend-multiply" />
-                         <p className="text-[10px] text-slate-400 mt-2">Scan to Pay</p>
+                     <div className="mt-4 animate-fade-in bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center text-center w-full">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" className="w-40 h-40 opacity-90 mix-blend-multiply" />
+                         <p className="text-[10px] text-slate-400 mt-2">Scan via GoPay/OVO/BCA Mobile</p>
                      </div>
                  )}
 
                  {(paymentMethod === 'qris' || (paymentMethod === 'bank' && selectedBank)) && (
-                     <div className="mt-4 pt-4 border-t border-slate-100 animate-fade-in">
+                     <div className="mt-4 pt-4 border-t border-slate-100 animate-fade-in w-full">
                          <p className="text-xs font-bold text-slate-900 mb-2">Upload Payment Proof</p>
-                         <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
+                         <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
                              <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                  {transferProof ? (
-                                     <div className="flex items-center gap-2 text-green-600">
-                                         <CheckCircle2 className="w-5 h-5" />
-                                         <p className="text-xs font-bold">{transferProof.name}</p>
+                                     <div className="flex flex-col items-center text-green-600 px-4 text-center">
+                                         <CheckCircle2 className="w-6 h-6 mb-2" />
+                                         <p className="text-xs font-bold break-all line-clamp-1">{transferProof.name}</p>
+                                         <p className="text-[10px] text-green-500">File selected</p>
                                      </div>
                                  ) : (
                                      <>
-                                         <Upload className="w-6 h-6 text-slate-400 mb-1" />
-                                         <p className="text-[10px] text-slate-500">Click to upload screenshot</p>
+                                         <Upload className="w-6 h-6 text-slate-400 mb-2" />
+                                         <p className="text-[10px] text-slate-500 font-bold">Click to upload screenshot</p>
+                                         <p className="text-[9px] text-slate-400">JPG, PNG supported</p>
                                      </>
                                  )}
                              </div>
@@ -839,28 +867,27 @@ export default function App() {
                  )}
               </div>
 
-              <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+              <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 w-full">
                 <h3 className="font-bold text-slate-900 mb-4">Summary</h3>
-                <div className="space-y-2 text-sm">
+                <div className="space-y-3 text-sm">
                   <div className="flex justify-between text-slate-500"><span>Subtotal</span><span>Rp {subtotal.toLocaleString()}</span></div>
                   <div className="flex justify-between text-slate-500"><span>Service & Tax (21%)</span><span>Rp {taxService.toLocaleString()}</span></div>
-                  <div className="flex justify-between text-lg font-bold text-slate-900 mt-4 pt-4 border-t border-slate-100"><span>Total</span><span>Rp {grandTotal.toLocaleString()}</span></div>
+                  <div className="flex justify-between text-xl font-bold text-slate-900 mt-4 pt-4 border-t border-slate-100"><span>Total</span><span>Rp {grandTotal.toLocaleString()}</span></div>
                 </div>
               </div>
             </div>
 
-            <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center pointer-events-none">
-               <div className="w-full max-w-md px-6 pointer-events-auto">
-                   <button 
-                    onClick={handleOrder} 
-                    disabled={loading || (paymentMethod !== 'room' && !transferProof)} 
-                    className={`w-full py-4 rounded-2xl font-bold text-sm shadow-xl flex justify-center items-center gap-2 transition-all 
-                        ${loading || (paymentMethod !== 'room' && !transferProof) ? 'bg-slate-300 text-white cursor-not-allowed' : 'bg-slate-900 text-white'}`
-                    }
-                   >
-                       {loading ? 'Processing...' : (paymentMethod !== 'room' && !transferProof ? 'Upload Proof to Continue' : txt.placeOrder)}
-                   </button>
-               </div>
+            {/* BUTTON FLOAT FIXED - FULL WIDTH */}
+            <div className="fixed bottom-0 left-0 right-0 z-40 p-6 bg-gradient-to-t from-white via-white to-transparent w-full">
+               <button 
+                onClick={handleOrder} 
+                disabled={loading || (paymentMethod !== 'room' && !transferProof)} 
+                className={`w-full py-4 rounded-2xl font-bold text-sm shadow-xl flex justify-center items-center gap-2 transition-all 
+                    ${loading || (paymentMethod !== 'room' && !transferProof) ? 'bg-slate-300 text-white cursor-not-allowed' : 'bg-slate-900 text-white hover:bg-slate-800 active:scale-95'}`
+                }
+               >
+                   {loading ? 'Processing...' : (paymentMethod !== 'room' && !transferProof ? 'Upload Proof to Continue' : txt.placeOrder)}
+               </button>
             </div>
         </div>
       </div>
@@ -877,8 +904,8 @@ export default function App() {
     ];
 
     return (
-      <div className="min-h-screen bg-slate-50 font-sans flex justify-center overflow-hidden">
-        <div className="w-full max-w-md bg-white min-h-screen shadow-2xl relative flex flex-col">
+      <div className="min-h-screen bg-slate-50 font-sans w-full">
+        <div className="w-full bg-white min-h-screen shadow-2xl relative flex flex-col">
             
             <div className="h-1/3 bg-slate-900 relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg')] bg-cover"></div>
