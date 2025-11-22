@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Minus, ChevronRight, Star, Building2, QrCode, CreditCard, ChevronLeft, CheckCircle2, Clock, Bell, Upload, X, Info } from 'lucide-react';
 
-// --- DATA MENU LENGKAP (40 ITEMS - CIPUTRA SEMARANG STYLE) ---
+// --- DATA MENU LENGKAP (40 ITEMS) ---
 const MENU_ITEMS = [
-  // --- APPETIZER (10 Items) ---
+  // APPETIZER
   {
     id: 1,
     name: "Lumpia Semarang",
@@ -20,7 +20,7 @@ const MENU_ITEMS = [
     description: "Fried tofu, prawn fritters, egg, and vegetables with peanut sauce.",
     price: 55000,
     category: "Appetizer",
-    image: "https://images.unsplash.com/photo-1568457939820-e0198d97419f?auto=format&fit=crop&w=800&q=80",
+    image: "https://assets-pergikuliner.com/18yT7S_zJ4k1d6rL2e4k8pZ5nQk=/fit-in/1366x768/smart/filters:no_upscale()/https://assets-pergikuliner.com/uploads/image/picture/1585549/picture-1568183594.jpg",
     tag: "Semarang Special",
     allergens: "Peanut, Egg, Shrimp"
   },
@@ -105,7 +105,7 @@ const MENU_ITEMS = [
     allergens: "Wheat"
   },
 
-  // --- MAIN COURSE (10 Items) ---
+  // MAIN COURSE
   {
     id: 11,
     name: "Nasi Goreng Ciputra",
@@ -207,7 +207,7 @@ const MENU_ITEMS = [
     allergens: "Fish, Wheat"
   },
 
-  // --- DESSERT (10 Items) ---
+  // DESSERT
   {
     id: 21,
     name: "Pisang Goreng Keju",
@@ -309,7 +309,7 @@ const MENU_ITEMS = [
     allergens: "Dairy, Wheat, Nuts"
   },
 
-  // --- BEVERAGE (10 Items) ---
+  // BEVERAGE
   {
     id: 31,
     name: "Iced Cappuccino",
@@ -421,42 +421,38 @@ const BANKS = [
 ];
 
 export default function App() {
-  // STATE UTAMA
+  // STATE
   const [view, setView] = useState('login'); 
   const [lang, setLang] = useState('EN');
-  
-  // STATE DATA
   const [cart, setCart] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("Main Course");
   
-  // STATE MODALS & FEATURES
+  // MODALS
   const [showCartModal, setShowCartModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [userRating, setUserRating] = useState(0);
   
-  // STATE ITEM DETAILS
+  // ITEM DETAILS
   const [itemQty, setItemQty] = useState(1);
   const [itemNote, setItemNote] = useState("");
 
-  // STATE CHECKOUT
+  // CHECKOUT
   const [paymentMethod, setPaymentMethod] = useState("room");
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
   const [transferProof, setTransferProof] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   
-  // STATE USER
+  // USER INFO
   const [roomNumber, setRoomNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loginError, setLoginError] = useState("");
-
-  // STATE TRACKING
   const [orderStatus, setOrderStatus] = useState(0);
 
   // TRANSLATIONS
   const t: any = {
     EN: {
-      subtitle: "The Gallery Restaurant - In Room Dining",
+      subtitle: "Exquisite dining, delivered to your room",
       start: "Start Dining",
       room: "Room Number",
       phone: "Phone Number",
@@ -500,7 +496,6 @@ export default function App() {
   const txt = t[lang];
 
   // --- LOGIC ---
-
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return txt.morning;
@@ -508,7 +503,6 @@ export default function App() {
     return txt.evening;
   };
 
-  // Simulate Status Updates
   useEffect(() => {
     if (view === 'tracking') {
       setOrderStatus(0);
@@ -518,7 +512,6 @@ export default function App() {
         setOrderStatus(3); 
         setTimeout(() => setShowRatingModal(true), 1000); 
       }, 12000);
-      
       return () => { clearTimeout(timer1); clearTimeout(timer2); clearTimeout(timer3); };
     }
   }, [view]);
@@ -584,7 +577,7 @@ export default function App() {
   // --- VIEW 1: LOGIN ---
   if (view === 'login') {
     return (
-      <div className="fixed inset-0 w-full h-[100dvh] flex flex-col justify-center items-center p-6 font-sans overflow-hidden bg-black">
+      <div className="fixed inset-0 w-full h-full flex flex-col justify-center items-center p-6 font-sans overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1763604584073-7f05efb157f9?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-full object-cover opacity-70" alt="Background" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80"></div>
@@ -601,7 +594,7 @@ export default function App() {
 
           <div className="text-center mb-8 animate-fade-in-up">
              <img src="https://i.ibb.co.com/JFzbjBqz/Logo-ciputra-copy.png" className="w-28 h-auto mx-auto mb-5 object-contain drop-shadow-2xl opacity-95" alt="Logo" />
-             <h1 className="text-3xl font-serif text-white drop-shadow-lg tracking-wide mb-2">The Gallery Restaurant</h1>
+             <h1 className="text-3xl font-serif text-white drop-shadow-lg tracking-wide mb-2">The Gallery</h1>
              <p className="text-white/80 text-xs mt-2 font-serif italic">"{txt.subtitle}"</p>
           </div>
 
@@ -627,14 +620,14 @@ export default function App() {
     );
   }
 
-  // --- VIEW 2: MENU (REVISI LAYOUT RESPONSIF) ---
+  // --- VIEW 2: MENU (FIXED WIDTH FULL) ---
   if (view === 'menu') {
     return (
-      <div className="min-h-screen bg-slate-50 font-sans pb-32 flex justify-center overflow-x-hidden">
-        <div className="w-full max-w-md bg-slate-50 min-h-screen shadow-2xl relative">
+      // GUNAKAN w-full mutlak
+      <div className="min-h-screen bg-slate-50 font-sans pb-32 w-full overflow-x-hidden">
+        <div className="w-full bg-slate-50 min-h-screen relative">
             
-            {/* HEADER STICKY */}
-            <div className="bg-white sticky top-0 z-30 px-6 pt-8 pb-4 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
+            <div className="bg-white sticky top-0 z-30 px-6 pt-8 pb-4 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] w-full">
               <div className="flex items-center justify-between mb-6">
                  <div>
                    <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-1">{getGreeting()}</p>
@@ -643,54 +636,42 @@ export default function App() {
                  <div className="w-10 h-10 bg-orange-50 rounded-full overflow-hidden border border-orange-100"><img src={`https://api.dicebear.com/7.x/initials/svg?seed=${roomNumber}`} alt="user" /></div>
               </div>
 
-              {/* CATEGORY TABS */}
-              <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+              <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar w-full pr-6">
                 {CATEGORIES.map(cat => (
-                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${selectedCategory === cat ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'}`}>{cat}</button>
+                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border flex-shrink-0 ${selectedCategory === cat ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'}`}>{cat}</button>
                 ))}
               </div>
             </div>
 
-            {/* LIST MENU ITEMS (NEW LAYOUT) */}
-            <div className="p-5 space-y-5">
+            <div className="p-6 space-y-6 w-full">
               {MENU_ITEMS.filter(item => item.category === selectedCategory).map((item: any) => (
-                // FIX: Layout diubah jadi padding-inside, bukan full-bleed image
-                <div key={item.id} onClick={() => openItemDetail(item)} className="bg-white p-3 rounded-[1.5rem] shadow-sm border border-slate-100 flex gap-4 items-start active:scale-[0.98] transition-transform cursor-pointer group">
-                  
-                  {/* IMAGE KIRI (SQUARE ROUNDED) */}
-                  <div className="w-24 h-24 flex-shrink-0 rounded-2xl overflow-hidden bg-slate-100 shadow-inner relative">
-                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" 
-                          onError={(e) => {e.currentTarget.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'}} // Fallback image
-                     />
-                     {item.tag && <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-1 text-center"><span className="text-[8px] font-bold text-white uppercase tracking-wider block">{item.tag}</span></div>}
+                <div key={item.id} className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-slate-100 flex h-32 relative group active:scale-[0.99] transition-transform w-full" onClick={() => openItemDetail(item)}>
+                  <div className="w-32 h-full flex-shrink-0">
+                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-
-                  {/* TEXT KANAN */}
-                  <div className="flex-1 flex flex-col justify-between min-h-[6rem]">
+                  <div className="p-4 flex flex-col justify-between flex-1 min-w-0">
                      <div>
-                        <h3 className="font-serif font-bold text-slate-900 leading-tight mb-1 text-[15px] line-clamp-2">{item.name}</h3>
-                        <p className="text-[10px] text-slate-400 leading-relaxed line-clamp-2">{item.description}</p>
+                        <div className="flex justify-between items-start">
+                             <h3 className="font-serif font-bold text-slate-900 leading-tight mb-1 line-clamp-1">{item.name}</h3>
+                             {item.tag && <span className="text-[8px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded uppercase flex-shrink-0 ml-1">{item.tag}</span>}
+                        </div>
+                        <p className="text-[10px] text-slate-400 leading-tight line-clamp-2">{item.description}</p>
                      </div>
-                     
                      <div className="flex items-end justify-between mt-2">
                         <p className="font-bold text-sm text-slate-900">{item.price === 0 ? txt.free : `Rp ${item.price.toLocaleString()}`}</p>
-                        {/* Tombol Plus Kecil Visual */}
-                        <div className="w-7 h-7 bg-slate-50 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-colors">
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-900 hover:bg-orange-600 hover:text-white transition-colors">
                            <Plus className="w-4 h-4" />
                         </div>
                      </div>
                   </div>
                 </div>
               ))}
-              {/* Spacer biar item terakhir gak ketutup tombol cart */}
-              <div className="h-20"></div>
             </div>
 
-            {/* FLOATING CART BUTTON */}
             {cart.length > 0 && (
-              <div className="fixed bottom-8 left-0 right-0 z-40 animate-slide-up flex justify-center pointer-events-none">
-                <div className="w-full max-w-md px-6 pointer-events-auto">
-                    <button onClick={() => setShowCartModal(true)} className="w-full bg-slate-900 text-white p-2 pr-6 rounded-full shadow-2xl shadow-slate-900/30 flex justify-between items-center ring-4 ring-white">
+              <div className="fixed bottom-8 left-0 right-0 z-40 animate-slide-up flex justify-center w-full px-6">
+                <div className="w-full">
+                    <button onClick={() => setShowCartModal(true)} className="w-full bg-slate-900 text-white p-2 pr-6 rounded-full shadow-2xl shadow-slate-900/30 flex justify-between items-center">
                        <div className="flex items-center gap-4"><div className="w-10 h-10 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold text-sm">{cart.length}</div><div className="text-left"><p className="text-[9px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">{txt.total}</p><p className="font-bold text-sm">Rp {grandTotal.toLocaleString()}</p></div></div>
                        <div className="flex items-center gap-2 font-bold text-xs tracking-widest uppercase">{txt.cart} <ChevronRight className="w-4 h-4" /></div>
                     </button>
@@ -698,15 +679,14 @@ export default function App() {
               </div>
             )}
 
-            {/* ITEM DETAIL MODAL (SAMA SEPERTI SEBELUMNYA) */}
+            {/* DETAIL MODAL */}
             {selectedItem && (
-              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center">
-                <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 animate-slide-up shadow-2xl max-h-[90vh] overflow-y-auto">
+              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center w-full">
+                <div className="bg-white w-full rounded-t-[2.5rem] p-8 animate-slide-up shadow-2xl max-h-[90vh] overflow-y-auto">
                    <div className="flex justify-between items-start mb-4">
                      <div className="max-w-[80%]"><h2 className="text-2xl font-serif font-bold text-slate-900 mb-1">{selectedItem.name}</h2><p className="text-orange-600 font-bold text-lg">{selectedItem.price === 0 ? txt.free : `Rp ${selectedItem.price.toLocaleString()}`}</p></div>
                      <button onClick={() => setSelectedItem(null)} className="p-2 bg-slate-100 rounded-full"><X className="w-6 h-6 text-slate-500" /></button>
                    </div>
-                   
                    <p className="text-sm text-slate-500 mb-4">{selectedItem.description}</p>
                    
                    {selectedItem.allergens && (
@@ -720,13 +700,7 @@ export default function App() {
                    )}
 
                    <div className="mb-8">
-                        <textarea 
-                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500 transition-all" 
-                            rows={2} 
-                            placeholder="Notes (e.g. extra spicy, no onions)..." 
-                            value={itemNote} 
-                            onChange={(e) => setItemNote(e.target.value)}
-                        ></textarea>
+                        <textarea className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500 transition-all" rows={2} placeholder="Notes (e.g. extra spicy, no onions)..." value={itemNote} onChange={(e) => setItemNote(e.target.value)}></textarea>
                    </div>
 
                    <div className="flex gap-4 items-center">
@@ -741,10 +715,10 @@ export default function App() {
               </div>
             )}
 
-            {/* CART MODAL (SAMA SEPERTI SEBELUMNYA) */}
+            {/* CART MODAL */}
             {showCartModal && (
-              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center">
-                 <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 max-h-[85vh] overflow-y-auto animate-slide-up shadow-2xl">
+              <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center w-full">
+                 <div className="bg-white w-full rounded-t-[2.5rem] p-8 max-h-[85vh] overflow-y-auto animate-slide-up shadow-2xl">
                    <div className="flex justify-between items-center mb-8"><h2 className="text-xl font-serif font-bold text-slate-900">{txt.cart}</h2><button onClick={() => setShowCartModal(false)} className="p-2 bg-slate-50 rounded-full"><X className="w-5 h-5 text-slate-400" /></button></div>
                    <div className="space-y-4 mb-8">
                      {cart.map((item: any, idx: number) => (
@@ -770,12 +744,10 @@ export default function App() {
     );
   }
 
-  // --- VIEW 3: CHECKOUT (FIX 100% FULL WIDTH - NO GAP) ---
+  // --- VIEW 3: CHECKOUT (FIX 100% FULL WIDTH) ---
   if (view === 'checkout') {
     return (
-      <div className="min-h-screen bg-slate-50 font-sans pb-32 w-full">
-        
-        {/* FIX: Hapus 'md:max-w-md md:mx-auto'. Ganti jadi 'w-full' mutlak */}
+      <div className="min-h-screen bg-slate-50 font-sans pb-32 w-full overflow-x-hidden">
         <div className="w-full bg-slate-50 min-h-screen relative">
             
             {/* HEADER */}
@@ -791,26 +763,22 @@ export default function App() {
               </div>
             </div>
 
-            {/* CONTENT */}
             <div className="p-6 space-y-6 w-full">
               <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 w-full">
                  <h3 className="font-bold text-slate-900 mb-4">Payment Method</h3>
                  <div className="space-y-3">
-                    {/* OPTION 1: Room Charge */}
                     <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all w-full ${paymentMethod === 'room' ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}>
                         <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'room'} onChange={() => setPaymentMethod('room')} />
                         <Building2 className={`w-6 h-6 flex-shrink-0 ${paymentMethod === 'room' ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-bold text-sm text-slate-900">Charge to Room</span>
                     </label>
 
-                    {/* OPTION 2: QRIS */}
                     <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all w-full ${paymentMethod === 'qris' ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}>
                         <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'qris'} onChange={() => setPaymentMethod('qris')} />
                         <QrCode className={`w-6 h-6 flex-shrink-0 ${paymentMethod === 'qris' ? 'text-orange-600' : 'text-slate-400'}`} />
                         <span className="font-bold text-sm text-slate-900">QRIS / E-Wallet</span>
                     </label>
 
-                    {/* OPTION 3: Transfer */}
                     <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all w-full ${paymentMethod === 'bank' ? 'border-orange-500 bg-orange-50' : 'border-slate-100 hover:border-slate-200'}`}>
                         <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'bank'} onChange={() => setPaymentMethod('bank')} />
                         <CreditCard className={`w-6 h-6 flex-shrink-0 ${paymentMethod === 'bank' ? 'text-orange-600' : 'text-slate-400'}`} />
@@ -877,24 +845,15 @@ export default function App() {
               </div>
             </div>
 
-            {/* BUTTON FLOAT FIXED - FULL WIDTH */}
             <div className="fixed bottom-0 left-0 right-0 z-40 p-6 bg-gradient-to-t from-white via-white to-transparent w-full">
-               <button 
-                onClick={handleOrder} 
-                disabled={loading || (paymentMethod !== 'room' && !transferProof)} 
-                className={`w-full py-4 rounded-2xl font-bold text-sm shadow-xl flex justify-center items-center gap-2 transition-all 
-                    ${loading || (paymentMethod !== 'room' && !transferProof) ? 'bg-slate-300 text-white cursor-not-allowed' : 'bg-slate-900 text-white hover:bg-slate-800 active:scale-95'}`
-                }
-               >
-                   {loading ? 'Processing...' : (paymentMethod !== 'room' && !transferProof ? 'Upload Proof to Continue' : txt.placeOrder)}
-               </button>
+               <button onClick={handleOrder} disabled={loading || (paymentMethod !== 'room' && !transferProof)} className={`w-full py-4 rounded-2xl font-bold text-sm shadow-xl flex justify-center items-center gap-2 transition-all ${loading || (paymentMethod !== 'room' && !transferProof) ? 'bg-slate-300 text-white cursor-not-allowed' : 'bg-slate-900 text-white hover:bg-slate-800 active:scale-95'}`}>{loading ? 'Processing...' : (paymentMethod !== 'room' && !transferProof ? 'Upload Proof to Continue' : txt.placeOrder)}</button>
             </div>
         </div>
       </div>
     );
   }
 
-  // --- VIEW 4: TRACKING ---
+  // --- VIEW 4: TRACKING (FIX 100% FULL WIDTH) ---
   if (view === 'tracking') {
     const steps = [
         { icon: <CheckCircle2 className="w-5 h-5" />, label: "Order Confirmed", sub: "We have received your request." },
@@ -904,32 +863,32 @@ export default function App() {
     ];
 
     return (
-      <div className="min-h-screen bg-slate-50 font-sans w-full">
-        <div className="w-full bg-white min-h-screen shadow-2xl relative flex flex-col">
+      <div className="min-h-screen bg-slate-50 font-sans w-full overflow-hidden">
+        <div className="w-full bg-white min-h-screen shadow-none relative flex flex-col">
             
-            <div className="h-1/3 bg-slate-900 relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg')] bg-cover"></div>
+            <div className="h-[35vh] bg-slate-900 relative overflow-hidden flex items-center justify-center w-full">
+                <div className="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg')] bg-cover bg-center"></div>
                 <div className="relative z-10 text-center">
-                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-[0_0_40px_rgba(34,197,94,0.6)]">
+                    <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-[0_0_40px_rgba(34,197,94,0.6)]">
                         <Clock className="w-10 h-10 text-white" />
                     </div>
-                    <h2 className="text-white font-serif text-2xl font-bold">{txt.trackTitle}</h2>
-                    <p className="text-white/60 text-xs tracking-widest uppercase mt-1">Est. Time: 20-30 Mins</p>
+                    <h2 className="text-white font-serif text-2xl font-bold tracking-wide">{txt.trackTitle}</h2>
+                    <p className="text-white/60 text-xs tracking-widest uppercase mt-2 bg-black/20 px-3 py-1 rounded-full inline-block">Est. Time: 20-30 Mins</p>
                 </div>
             </div>
 
-            <div className="flex-1 p-8 -mt-6 bg-white rounded-t-[2.5rem] relative z-20">
+            <div className="flex-1 p-8 -mt-8 bg-white rounded-t-[2.5rem] relative z-20 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] w-full">
                 <div className="space-y-8 mt-4">
                     {steps.map((step, idx) => (
-                        <div key={idx} className={`flex gap-4 relative ${idx <= orderStatus ? 'opacity-100' : 'opacity-30 grayscale'}`}>
+                        <div key={idx} className={`flex gap-5 relative ${idx <= orderStatus ? 'opacity-100' : 'opacity-30 grayscale'}`}>
                             {idx !== steps.length - 1 && (
-                                <div className={`absolute left-[19px] top-8 bottom-[-24px] w-0.5 ${idx < orderStatus ? 'bg-green-500' : 'bg-slate-200'}`}></div>
+                                <div className={`absolute left-[19px] top-10 bottom-[-30px] w-0.5 ${idx < orderStatus ? 'bg-green-500' : 'bg-slate-100'}`}></div>
                             )}
-                            <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center border-2 z-10 bg-white ${idx <= orderStatus ? 'border-green-500 text-green-600 shadow-lg shadow-green-100' : 'border-slate-200 text-slate-300'}`}>
+                            <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center border-2 z-10 bg-white transition-all duration-500 ${idx <= orderStatus ? 'border-green-500 text-green-600 shadow-lg shadow-green-100 scale-110' : 'border-slate-100 text-slate-300'}`}>
                                 {step.icon}
                             </div>
-                            <div className={`${idx === orderStatus ? 'scale-105 transition-transform origin-left' : ''}`}>
-                                <h4 className={`font-bold text-sm ${idx <= orderStatus ? 'text-slate-900' : 'text-slate-400'}`}>{step.label}</h4>
+                            <div className={`${idx === orderStatus ? 'translate-x-2 transition-transform duration-500' : ''}`}>
+                                <h4 className={`font-bold text-sm ${idx <= orderStatus ? 'text-slate-900' : 'text-slate-900'}`}>{step.label}</h4>
                                 <p className="text-xs text-slate-500 leading-tight mt-1">{step.sub}</p>
                             </div>
                         </div>
@@ -938,23 +897,22 @@ export default function App() {
             </div>
 
             {showRatingModal && (
-                <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 animate-fade-in">
-                    <div className="bg-white w-full max-w-xs rounded-3xl p-6 text-center animate-slide-up">
-                        <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
+                <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-6 animate-fade-in w-full">
+                    <div className="bg-white w-full max-w-xs rounded-[2rem] p-8 text-center animate-slide-up shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-400 to-orange-600"></div>
+                        <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <Star className="w-10 h-10 text-orange-500 fill-orange-500" />
                         </div>
-                        <h3 className="font-serif font-bold text-xl text-slate-900 mb-2">{txt.rateTitle}</h3>
-                        <p className="text-slate-500 text-xs mb-6">{txt.rateDesc}</p>
-                        
-                        <div className="flex justify-center gap-2 mb-8">
+                        <h3 className="font-serif font-bold text-2xl text-slate-900 mb-2">{txt.rateTitle}</h3>
+                        <p className="text-slate-500 text-sm mb-8 leading-relaxed">{txt.rateDesc}</p>
+                        <div className="flex justify-center gap-3 mb-10">
                             {[1,2,3,4,5].map(s => (
-                                <button key={s} onClick={() => setUserRating(s)} className="focus:outline-none transition-transform hover:scale-110">
-                                    <Star className={`w-8 h-8 transition-colors ${s <= userRating ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200'}`} />
+                                <button key={s} onClick={() => setUserRating(s)} className="focus:outline-none transition-all hover:scale-125 active:scale-90">
+                                    <Star className={`w-8 h-8 transition-colors duration-300 ${s <= userRating ? 'text-orange-400 fill-orange-400 drop-shadow-md' : 'text-slate-200'}`} />
                                 </button>
                             ))}
                         </div>
-                        
-                        <button onClick={handleFinish} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm shadow-lg active:scale-95 transition-transform">{txt.submit}</button>
+                        <button onClick={handleFinish} className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-sm shadow-xl active:scale-95 transition-transform">{txt.submit}</button>
                     </div>
                 </div>
             )}
