@@ -1,50 +1,317 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Plus, Minus, ChevronRight, Search, Star, MapPin, Phone, Globe, X, Info, Building2, QrCode, CreditCard, ChevronLeft, CheckCircle2 } from 'lucide-react';
+import { Plus, Minus, ChevronRight, Star, Building2, QrCode, CreditCard, ChevronLeft, CheckCircle2, Clock, Bell, Upload, X, Info } from 'lucide-react';
 
-// --- DATA MENU ---
+// --- DATA MENU LENGKAP (40 ITEMS - CIPUTRA SEMARANG STYLE) ---
 const MENU_ITEMS = [
+  // --- APPETIZER (10 Items) ---
   {
     id: 1,
-    name: "Nasi Goreng Ciputra",
-    description: "Signature fried rice with satay, fried chicken, and sunny side up egg.",
-    price: 95000,
-    category: "Main Course",
-    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80",
-    tag: "Best Seller",
-    allergens: "Egg, Peanut, Shrimp"
-  },
-  {
-    id: 2,
-    name: "Soto Ayam",
-    description: "Traditional turmeric chicken soup with glass noodles, cabbage, and egg.",
-    price: 85000,
-    category: "Main Course",
-    image: "https://images.unsplash.com/photo-1572656631137-7935297eff55?auto=format&fit=crop&w=800&q=80",
-    tag: "Chef Rec",
-    allergens: "Egg"
-  },
-  {
-    id: 3,
     name: "Lumpia Semarang",
-    description: "Traditional spring rolls filled with bamboo shoots, served with sweet sauce.",
+    description: "Famous local spring rolls with bamboo shoots, served with sweet garlic sauce.",
     price: 45000,
     category: "Appetizer",
     image: "https://images.unsplash.com/photo-1606101273945-e9eba91c0dc4?auto=format&fit=crop&w=800&q=80",
-    tag: "Local",
+    tag: "Local Icon",
     allergens: "Wheat, Shrimp"
   },
   {
+    id: 2,
+    name: "Tahu Gimbal",
+    description: "Fried tofu, prawn fritters, egg, and vegetables with peanut sauce.",
+    price: 55000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1568457939820-e0198d97419f?auto=format&fit=crop&w=800&q=80",
+    tag: "Semarang Special",
+    allergens: "Peanut, Egg, Shrimp"
+  },
+  {
+    id: 3,
+    name: "Classic Caesar Salad",
+    description: "Romaine lettuce, parmesan cheese, beef bacon, croutons, and caesar dressing.",
+    price: 85000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=800&q=80",
+    tag: "Healthy",
+    allergens: "Dairy, Egg"
+  },
+  {
     id: 4,
-    name: "Es Puter Conglik",
-    description: "Traditional coconut ice cream with durian and avocado topping.",
-    price: 40000,
-    category: "Dessert",
-    image: "https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80",
+    name: "Calamari Rings",
+    description: "Deep fried squid rings served with tartar sauce.",
+    price: 75000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Seafood, Wheat"
+  },
+  {
+    id: 5,
+    name: "Cream of Mushroom Soup",
+    description: "Rich creamy mushroom soup served with garlic bread.",
+    price: 65000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1547592166-23acbe3a624b?auto=format&fit=crop&w=800&q=80",
     tag: "",
     allergens: "Dairy"
   },
   {
-    id: 5,
+    id: 6,
+    name: "Chicken Wings",
+    description: "Fried chicken wings glazed with honey bbq sauce.",
+    price: 70000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80",
+    tag: "Best Seller",
+    allergens: "Wheat"
+  },
+  {
+    id: 7,
+    name: "Gado Gado",
+    description: "Indonesian vegetable salad with peanut dressing and crackers.",
+    price: 60000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1625220249804-e85eb685959d?auto=format&fit=crop&w=800&q=80",
+    tag: "Vegetarian",
+    allergens: "Peanut"
+  },
+  {
+    id: 8,
+    name: "French Fries",
+    description: "Shoestring fries served with chili sauce and mayonnaise.",
+    price: 45000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: ""
+  },
+  {
+    id: 9,
+    name: "Nachos Grande",
+    description: "Tortilla chips topped with melted cheese, salsa, and jalapenos.",
+    price: 80000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=800&q=80",
+    tag: "Sharing",
+    allergens: "Dairy, Corn"
+  },
+  {
+    id: 10,
+    name: "Tomato Bruschetta",
+    description: "Toasted baguette topped with fresh tomatoes, basil, and olive oil.",
+    price: 55000,
+    category: "Appetizer",
+    image: "https://images.unsplash.com/photo-1572695157369-a0eac0d6bbc9?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Wheat"
+  },
+
+  // --- MAIN COURSE (10 Items) ---
+  {
+    id: 11,
+    name: "Nasi Goreng Ciputra",
+    description: "Signature fried rice with satay, fried chicken, and sunny side up egg.",
+    price: 115000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80",
+    tag: "Signature",
+    allergens: "Egg, Peanut, Shrimp"
+  },
+  {
+    id: 12,
+    name: "Sop Buntut",
+    description: "Legendary oxtail soup (fried/grilled/boiled) with rice and crackers.",
+    price: 185000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=800&q=80",
+    tag: "Chef Rec",
+    allergens: "Nutmeg"
+  },
+  {
+    id: 13,
+    name: "Soto Ayam Semarang",
+    description: "Traditional turmeric chicken soup with glass noodles, served with rice.",
+    price: 85000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1572656631137-7935297eff55?auto=format&fit=crop&w=800&q=80",
+    tag: "Local",
+    allergens: "Egg"
+  },
+  {
+    id: 14,
+    name: "Ciputra Club Sandwich",
+    description: "Triple decker sandwich with chicken, bacon, egg, lettuce, tomato.",
+    price: 95000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Wheat, Egg"
+  },
+  {
+    id: 15,
+    name: "Australian Sirloin Steak",
+    description: "200g grilled sirloin served with potato wedges and mushroom sauce.",
+    price: 250000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80",
+    tag: "Premium",
+    allergens: "Dairy"
+  },
+  {
+    id: 16,
+    name: "Norwegian Salmon",
+    description: "Pan-seared salmon fillet with lemon butter sauce and mashed potatoes.",
+    price: 210000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1467003909585-2f8a7270028d?auto=format&fit=crop&w=800&q=80",
+    tag: "Healthy",
+    allergens: "Fish, Dairy"
+  },
+  {
+    id: 17,
+    name: "Beef Burger",
+    description: "Juicy beef patty with cheese, caramelized onion, served with fries.",
+    price: 110000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Wheat, Dairy"
+  },
+  {
+    id: 18,
+    name: "Spaghetti Bolognaise",
+    description: "Classic pasta with minced beef and tomato sauce.",
+    price: 95000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=800&q=80",
+    tag: "Kids Friendly",
+    allergens: "Wheat"
+  },
+  {
+    id: 19,
+    name: "Mie Goreng Jawa",
+    description: "Javanese style fried noodles with chicken and vegetables.",
+    price: 85000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1612927601601-6638404e45e8?auto=format&fit=crop&w=800&q=80",
+    tag: "Local",
+    allergens: "Wheat, Egg"
+  },
+  {
+    id: 20,
+    name: "Fish and Chips",
+    description: "Battered dory fish served with french fries and tartar sauce.",
+    price: 90000,
+    category: "Main Course",
+    image: "https://images.unsplash.com/photo-1579208575657-c595a05383b7?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Fish, Wheat"
+  },
+
+  // --- DESSERT (10 Items) ---
+  {
+    id: 21,
+    name: "Pisang Goreng Keju",
+    description: "Fried banana topped with grated cheese and chocolate sprinkles.",
+    price: 55000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1564665978126-4b54c5890833?auto=format&fit=crop&w=800&q=80",
+    tag: "Local Fav",
+    allergens: "Dairy"
+  },
+  {
+    id: 22,
+    name: "Chocolate Lava Cake",
+    description: "Warm chocolate cake with molten center, served with vanilla ice cream.",
+    price: 75000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=800&q=80",
+    tag: "Best Seller",
+    allergens: "Dairy, Egg, Wheat"
+  },
+  {
+    id: 23,
+    name: "Tropical Fruit Platter",
+    description: "Assorted seasonal fresh sliced fruits.",
+    price: 50000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1519996529931-28324d1a6390?auto=format&fit=crop&w=800&q=80",
+    tag: "Healthy",
+    allergens: ""
+  },
+  {
+    id: 24,
+    name: "New York Cheesecake",
+    description: "Creamy cheesecake with strawberry compote.",
+    price: 70000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1524351199678-941a58a3df50?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Dairy, Wheat"
+  },
+  {
+    id: 25,
+    name: "Es Campur",
+    description: "Indonesian mixed ice dessert with jelly, fruits, and syrup.",
+    price: 55000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1559628376-f3fe5f782a2e?auto=format&fit=crop&w=800&q=80",
+    tag: "Refreshing",
+    allergens: "Dairy"
+  },
+  {
+    id: 26,
+    name: "Creme Brulee",
+    description: "Classic french custard with caramelized sugar crust.",
+    price: 65000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Dairy, Egg"
+  },
+  {
+    id: 27,
+    name: "Es Puter Conglik",
+    description: "Traditional coconut ice cream with durian and avocado topping.",
+    price: 55000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80",
+    tag: "Semarang Icon",
+    allergens: "Dairy"
+  },
+  {
+    id: 28,
+    name: "Apple Tart",
+    description: "Warm apple tart served with vanilla sauce.",
+    price: 65000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Wheat"
+  },
+  {
+    id: 29,
+    name: "Ice Cream Scoop",
+    description: "Choice of Vanilla, Chocolate, or Strawberry.",
+    price: 35000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1576506295286-5cda18df43e7?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Dairy"
+  },
+  {
+    id: 30,
+    name: "Opera Cake",
+    description: "Layers of almond sponge, coffee buttercream, and chocolate ganache.",
+    price: 75000,
+    category: "Dessert",
+    image: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Dairy, Wheat, Nuts"
+  },
+
+  // --- BEVERAGE (10 Items) ---
+  {
+    id: 31,
     name: "Iced Cappuccino",
     description: "Freshly brewed espresso with cold milk and foam.",
     price: 45000,
@@ -52,97 +319,215 @@ const MENU_ITEMS = [
     image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80",
     tag: "",
     allergens: "Dairy, Caffeine"
+  },
+  {
+    id: 32,
+    name: "Fresh Orange Juice",
+    description: "Squeezed from fresh oranges, no sugar added.",
+    price: 55000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80",
+    tag: "Healthy",
+    allergens: ""
+  },
+  {
+    id: 33,
+    name: "Avocado Coffee",
+    description: "Creamy avocado juice topped with espresso shot and chocolate syrup.",
+    price: 60000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?auto=format&fit=crop&w=800&q=80",
+    tag: "Barista Rec",
+    allergens: "Dairy, Caffeine"
+  },
+  {
+    id: 34,
+    name: "Wedang Jahe",
+    description: "Traditional hot ginger drink with palm sugar.",
+    price: 40000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1596803244618-8dabe4f9d771?auto=format&fit=crop&w=800&q=80",
+    tag: "Local Healing",
+    allergens: ""
+  },
+  {
+    id: 35,
+    name: "Iced Lemon Tea",
+    description: "Refreshing black tea with fresh lemon slices.",
+    price: 35000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: ""
+  },
+  {
+    id: 36,
+    name: "Watermelon Juice",
+    description: "Freshly blended watermelon.",
+    price: 50000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: ""
+  },
+  {
+    id: 37,
+    name: "Hot Chocolate",
+    description: "Rich hot cocoa served with marshmallows.",
+    price: 50000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: "Dairy"
+  },
+  {
+    id: 38,
+    name: "Mineral Water (Equil)",
+    description: "Premium natural sparkling mineral water (380ml).",
+    price: 45000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1560130958-f69704284a37?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: ""
+  },
+  {
+    id: 39,
+    name: "Bintang Beer",
+    description: "Indonesian pilsner beer (330ml).",
+    price: 75000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1634486654235-5d4a5e2c7600?auto=format&fit=crop&w=800&q=80",
+    tag: "21+",
+    allergens: "Alcohol"
+  },
+  {
+    id: 40,
+    name: "Coca Cola",
+    description: "Classic carbonated soft drink.",
+    price: 35000,
+    category: "Beverage",
+    image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80",
+    tag: "",
+    allergens: ""
   }
 ];
 
 const CATEGORIES = ["Appetizer", "Main Course", "Dessert", "Beverage"];
 
-// --- DATA BANK ---
 const BANKS = [
   { id: 'bca', name: 'BCA', code: '88010' },
   { id: 'mandiri', name: 'Mandiri', code: '89022' },
-  { id: 'bni', name: 'BNI', code: '8241' },
-  { id: 'bri', name: 'BRI', code: '1200' }
+  { id: 'bni', name: 'BNI', code: '8241' }
 ];
 
 export default function App() {
+  // STATE UTAMA
   const [view, setView] = useState('login'); 
   const [lang, setLang] = useState('EN');
-  const [cart, setCart] = useState<any[]>([]); 
-  const [selectedCategory, setSelectedCategory] = useState("Main Course");
-  const [showCartModal, setShowCartModal] = useState(false);
   
+  // STATE DATA
+  const [cart, setCart] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("Main Course");
+  
+  // STATE MODALS & FEATURES
+  const [showCartModal, setShowCartModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+  
+  // STATE ITEM DETAILS
   const [itemQty, setItemQty] = useState(1);
   const [itemNote, setItemNote] = useState("");
 
+  // STATE CHECKOUT
   const [paymentMethod, setPaymentMethod] = useState("room");
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
+  const [transferProof, setTransferProof] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  
+  // STATE USER
   const [roomNumber, setRoomNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loginError, setLoginError] = useState("");
 
+  // STATE TRACKING
+  const [orderStatus, setOrderStatus] = useState(0);
+
+  // TRANSLATIONS
   const t: any = {
     EN: {
-      subtitle: "Exquisite dining, delivered to your room.",
+      subtitle: "The Gallery Restaurant - In Room Dining",
       start: "Start Dining",
       room: "Room Number",
       phone: "Phone Number",
       help: "Trouble logging in? Call Our Staff",
-      search: "Search menu...",
-      add: "Add",
       cart: "Your Cart",
       total: "Total",
       checkout: "Checkout",
       placeOrder: "Place Order",
-      ordering: "Processing...",
       successTitle: "Order Received",
-      successMsg: "Thank you! The kitchen at The Gallery is preparing your order.",
-      back: "Back to Home",
-      addNote: "Add Special Request (Optional)",
-      payment: "Payment Method",
-      summary: "Order Summary",
-      tax: "Tax & Service (21%)",
-      subtotal: "Subtotal",
-      errorRequired: "Please fill in all fields"
+      trackTitle: "Order Status",
+      rateTitle: "How was your meal?",
+      rateDesc: "Tap a star to rate.",
+      submit: "Submit Feedback",
+      free: "COMPLIMENTARY",
+      morning: "Good Morning,",
+      afternoon: "Good Afternoon,",
+      evening: "Good Evening,"
     },
     ID: {
-      subtitle: "Hidangan lezat, diantar ke kamar Anda.",
+      subtitle: "The Gallery Restaurant - Layanan Kamar",
       start: "Mulai Pesan",
       room: "Nomor Kamar",
       phone: "Nomor Handphone",
       help: "Kendala login? Hubungi Resepsionis",
-      search: "Cari menu...",
-      add: "Tambah",
       cart: "Keranjang",
       total: "Total",
       checkout: "Pembayaran",
       placeOrder: "Pesan Sekarang",
-      ordering: "Memproses...",
       successTitle: "Pesanan Diterima",
-      successMsg: "Terima kasih! Dapur The Gallery sedang menyiapkan pesanan Anda.",
-      back: "Kembali ke Beranda",
-      addNote: "Catatan Khusus (Opsional)",
-      payment: "Metode Pembayaran",
-      summary: "Ringkasan Pesanan",
-      tax: "Pajak & Layanan (21%)",
-      subtotal: "Subtotal",
-      errorRequired: "Harap isi semua bidang"
+      trackTitle: "Status Pesanan",
+      rateTitle: "Bagaimana makanan Anda?",
+      rateDesc: "Ketuk bintang untuk menilai.",
+      submit: "Kirim Ulasan",
+      free: "GRATIS",
+      morning: "Selamat Pagi,",
+      afternoon: "Selamat Siang,",
+      evening: "Selamat Malam,"
     }
   };
 
   const txt = t[lang];
 
+  // --- LOGIC ---
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return txt.morning;
+    if (hour < 18) return txt.afternoon;
+    return txt.evening;
+  };
+
+  // Simulate Status Updates
+  useEffect(() => {
+    if (view === 'tracking') {
+      setOrderStatus(0);
+      const timer1 = setTimeout(() => setOrderStatus(1), 3000); 
+      const timer2 = setTimeout(() => setOrderStatus(2), 7000); 
+      const timer3 = setTimeout(() => {
+        setOrderStatus(3); 
+        setTimeout(() => setShowRatingModal(true), 1000); 
+      }, 12000);
+      
+      return () => { clearTimeout(timer1); clearTimeout(timer2); clearTimeout(timer3); };
+    }
+  }, [view]);
+
   const handleLogin = () => {
     if (!roomNumber || !phoneNumber) {
-      setLoginError(txt.errorRequired);
+      setLoginError("Please fill in all fields");
       return;
     }
-    // SIMULASI SIMPAN DATA TAMU
-    const guestData = { room: roomNumber, phone: phoneNumber, time: new Date().toISOString() };
-    console.log("Guest Login:", guestData);
-    
     setLoginError("");
     setView('menu');
   };
@@ -165,6 +550,12 @@ export default function App() {
     setCart(newCart);
   };
 
+  const handleFileChange = (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      setTransferProof(e.target.files[0]);
+    }
+  };
+
   const subtotal = cart.reduce((sum, item: any) => sum + (item.price * item.qty), 0);
   const taxService = subtotal * 0.21;
   const grandTotal = subtotal + taxService;
@@ -173,24 +564,30 @@ export default function App() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setView('success');
+      setView('tracking');
       setCart([]);
       setShowCartModal(false);
+      setPaymentMethod("room");
+      setSelectedBank(null);
+      setTransferProof(null);
+    }, 2000);
+  };
+  
+  const handleFinish = () => {
+      setShowRatingModal(false);
+      setUserRating(0);
       setRoomNumber("");
       setPhoneNumber("");
-      setSelectedBank(null);
-      setPaymentMethod("room");
-    }, 2500);
+      setView('login');
   };
 
-  // --- VIEW 1: LOGIN (FULLSCREEN FIXED) ---
+  // --- VIEW 1: LOGIN ---
   if (view === 'login') {
     return (
       <div className="fixed inset-0 w-full h-[100dvh] flex flex-col justify-center items-center p-6 font-sans overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
-          {/* BACKGROUND */}
-          <img src="https://images.unsplash.com/photo-1763604584073-7f05efb157f9?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-full object-cover opacity-80" alt="Background" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-purple-900/30 to-black/70 backdrop-blur-[2px]"></div>
+          <img src="https://images.unsplash.com/photo-1763604584073-7f05efb157f9?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-full object-cover opacity-70" alt="Background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80"></div>
         </div>
         
         <div className="relative z-10 w-full max-w-[280px] mx-auto flex flex-col h-full justify-center">
@@ -203,12 +600,8 @@ export default function App() {
           </div>
 
           <div className="text-center mb-8 animate-fade-in-up">
-             {/* LOGO */}
              <img src="https://i.ibb.co.com/JFzbjBqz/Logo-ciputra-copy.png" className="w-28 h-auto mx-auto mb-5 object-contain drop-shadow-2xl opacity-95" alt="Logo" />
              <h1 className="text-3xl font-serif text-white drop-shadow-lg tracking-wide mb-2">The Gallery Restaurant</h1>
-             <p className="text-white/100 font-light italic text-[15px] tracking-widest uppercase border-t border-white/30 inline-block pt-2 px-4">
-               {lang === 'EN' ? '' : 'Hotel Ciputra Semarang'}
-             </p>
              <p className="text-white/80 text-xs mt-2 font-serif italic">"{txt.subtitle}"</p>
           </div>
 
@@ -216,114 +609,65 @@ export default function App() {
             <div className="space-y-3"> 
               <div className="group">
                 <label className="text-[8px] font-bold text-white/80 tracking-[0.2em] uppercase mb-1 block ml-2">{txt.room}</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MapPin className="h-3.5 w-3.5 text-white/70" />
-                  </div>
-                  <input 
-                    type="number" 
-                    placeholder="1024" 
-                    value={roomNumber}
-                    onChange={(e) => setRoomNumber(e.target.value)}
-                    className="block w-full pl-8 pr-3 py-2.5 bg-black/20 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm" 
-                  />
-                </div>
+                <input type="number" placeholder="1024" value={roomNumber} onChange={(e) => setRoomNumber(e.target.value)} className="block w-full px-4 py-2.5 bg-black/20 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm text-center" />
               </div>
               <div className="group">
                 <label className="text-[8px] font-bold text-white/80 tracking-[0.2em] uppercase mb-1 block ml-2">{txt.phone}</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Phone className="h-3.5 w-3.5 text-white/70" />
-                  </div>
-                  <input 
-                    type="tel" 
-                    placeholder="081..." 
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="block w-full pl-8 pr-3 py-2.5 bg-black/20 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm" 
-                  />
-                </div>
+                <input type="tel" placeholder="081..." value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="block w-full px-4 py-2.5 bg-black/20 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:bg-black/40 transition-all text-sm text-center" />
               </div>
-              
               {loginError && (<p className="text-red-300 text-[10px] text-center font-bold bg-red-900/30 py-1 rounded animate-pulse">{loginError}</p>)}
-              
               <div className="pt-2 flex justify-center">
-                <button 
-                  onClick={handleLogin} 
-                  className={`w-auto px-8 py-2.5 rounded-full font-bold text-[10px] shadow-lg active:scale-95 transition-all uppercase tracking-[0.2em] ${!roomNumber || !phoneNumber ? 'bg-white/20 text-white/50 cursor-not-allowed' : 'bg-white text-slate-900 hover:bg-slate-100 hover:shadow-xl'}`}
-                >
-                  {txt.start}
-                </button>
+                <button onClick={handleLogin} className="w-full bg-white text-slate-900 hover:bg-slate-100 py-3 rounded-xl font-bold text-xs shadow-lg active:scale-95 transition-all uppercase tracking-widest">{txt.start}</button>
               </div>
               <p className="text-center text-[9px] text-white/50 mt-3 cursor-pointer hover:text-white hover:underline transition-all">{txt.help}</p>
             </div>
-          </div>
-          
-          <div className="absolute bottom-6 left-0 right-0 text-center">
-             <p className="text-[8px] text-white/30 uppercase tracking-widest">© 2025 Swiss-Belhotel International</p>
           </div>
         </div>
       </div>
     );
   }
 
-  // --- VIEW 2: MENU (LAYOUT FIXED - ANTI MELEBAR) ---
+  // --- VIEW 2: MENU ---
   if (view === 'menu') {
-    const hour = new Date().getHours();
-    let greeting = lang === 'EN' ? (hour < 12 ? "Good Morning," : hour < 18 ? "Good Afternoon," : "Good Evening,") : (hour < 11 ? "Selamat Pagi," : hour < 15 ? "Selamat Siang," : hour < 18 ? "Selamat Sore," : "Selamat Malam,");
-
     return (
-      // FIX: Tambahkan 'flex justify-center' di wrapper utama
       <div className="min-h-screen bg-slate-50 font-sans pb-32 flex justify-center overflow-x-hidden">
-        
-        {/* FIX: Container 'w-full max-w-md' untuk membatasi lebar seperti HP */}
         <div className="w-full max-w-md bg-slate-50 min-h-screen shadow-2xl relative">
             
             <div className="bg-white sticky top-0 z-30 px-6 pt-8 pb-4 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
               <div className="flex items-center justify-between mb-6">
                  <div>
-                   <div className="flex items-center gap-2 mb-1">
-                     <span className={`w-2 h-2 rounded-full animate-pulse ${hour >= 7 && hour <= 22 ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                     <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">{hour >= 7 && hour <= 22 ? 'OPEN FOR SERVICE' : 'CLOSED'}</p>
-                   </div>
-                   <h2 className="text-2xl font-serif font-bold text-slate-900 leading-tight">{greeting} <br/> {roomNumber ? `Room ${roomNumber}` : 'Guest'}</h2>
+                   <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-1">{getGreeting()}</p>
+                   <h2 className="text-xl font-serif font-bold text-slate-900">Room {roomNumber}</h2>
                  </div>
-                 <div className="w-10 h-10 bg-orange-50 rounded-full overflow-hidden border border-orange-100"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="user" /></div>
-              </div>
-              
-              <div className="relative mb-6">
-                <Search className="absolute left-5 top-3.5 w-4 h-4 text-orange-400" />
-                <input type="text" placeholder={txt.search} className="w-full pl-12 pr-6 py-3.5 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all shadow-inner" />
+                 <div className="w-10 h-10 bg-orange-50 rounded-full overflow-hidden border border-orange-100"><img src={`https://api.dicebear.com/7.x/initials/svg?seed=${roomNumber}`} alt="user" /></div>
               </div>
 
               <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
                 {CATEGORIES.map(cat => (
-                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-6 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${selectedCategory === cat ? 'bg-orange-600 text-white border-orange-600 shadow-lg shadow-orange-200' : 'bg-white text-slate-500 border-slate-200 hover:border-orange-300 hover:text-orange-500'}`}>{cat}</button>
+                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${selectedCategory === cat ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-400'}`}>{cat}</button>
                 ))}
               </div>
             </div>
 
-            <div className="p-6 space-y-8">
-              <div className="flex items-center justify-between"><h3 className="font-bold text-lg text-slate-900">Featured Menu</h3><span className="text-xs text-orange-600 font-bold cursor-pointer">View All</span></div>
+            <div className="p-6 space-y-6">
               {MENU_ITEMS.filter(item => item.category === selectedCategory).map((item: any) => (
-                <div key={item.id} className="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/60 border border-slate-100 group">
-                  <div className="relative h-64 w-full">
+                <div key={item.id} className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-slate-100 flex h-32 relative group active:scale-[0.99] transition-transform" onClick={() => openItemDetail(item)}>
+                  <div className="w-32 h-full flex-shrink-0">
                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                     <div className="absolute top-5 left-5 flex gap-2">{item.tag && (<span className="bg-white/95 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 shadow-sm tracking-wide uppercase">{item.tag}</span>)}</div>
-                     <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/60 to-transparent"></div>
                   </div>
-                  <div className="px-6 pb-8 -mt-8 relative z-10">
-                     <h3 className="font-serif font-bold text-2xl text-slate-900 mb-2">{item.name}</h3>
-                     <p className="text-xs text-slate-500 leading-relaxed mb-6 pr-4">{item.description}</p>
-                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          {/* TOMBOL ADD DENGAN SVG MANUAL */}
-                          <button onClick={() => openItemDetail(item)} className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-orange-500/40 hover:scale-110 active:scale-90 transition-transform">
-                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                          </button>
-                          <p className="font-bold text-lg text-slate-900">Rp {item.price.toLocaleString()}</p>
+                  <div className="p-4 flex flex-col justify-between flex-1">
+                     <div>
+                        <div className="flex justify-between items-start">
+                             <h3 className="font-serif font-bold text-slate-900 leading-tight mb-1 line-clamp-1">{item.name}</h3>
+                             {item.tag && <span className="text-[8px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded uppercase">{item.tag}</span>}
                         </div>
-                        <div className="text-[10px] font-bold text-slate-400 flex items-center gap-1"><span className="w-3 h-3 rounded-full border border-slate-300 flex items-center justify-center text-[8px]">i</span> 20m</div>
+                        <p className="text-[10px] text-slate-400 leading-tight line-clamp-2">{item.description}</p>
+                     </div>
+                     <div className="flex items-end justify-between mt-2">
+                        <p className="font-bold text-sm text-slate-900">{item.price === 0 ? txt.free : `Rp ${item.price.toLocaleString()}`}</p>
+                        <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-900 hover:bg-orange-600 hover:text-white transition-colors">
+                           <Plus className="w-4 h-4" />
+                        </div>
                      </div>
                   </div>
                 </div>
@@ -331,34 +675,54 @@ export default function App() {
             </div>
 
             {cart.length > 0 && (
-              // FIX: Floating Cart Tetap di Tengah
               <div className="fixed bottom-8 left-0 right-0 z-40 animate-slide-up flex justify-center pointer-events-none">
                 <div className="w-full max-w-md px-6 pointer-events-auto">
-                    <button onClick={() => setShowCartModal(true)} className="w-full bg-orange-600 text-white p-1.5 pr-6 rounded-full shadow-2xl shadow-orange-500/50 flex justify-between items-center ring-4 ring-white">
-                       <div className="flex items-center gap-4"><div className="w-12 h-12 bg-white text-orange-600 rounded-full flex items-center justify-center font-bold text-lg shadow-inner">{cart.length}</div><div className="text-left"><p className="text-[9px] text-orange-100 uppercase tracking-widest font-bold mb-0.5">{txt.total}</p><p className="font-bold text-sm">Rp {grandTotal.toLocaleString()}</p></div></div>
+                    <button onClick={() => setShowCartModal(true)} className="w-full bg-slate-900 text-white p-2 pr-6 rounded-full shadow-2xl shadow-slate-900/30 flex justify-between items-center">
+                       <div className="flex items-center gap-4"><div className="w-10 h-10 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold text-sm">{cart.length}</div><div className="text-left"><p className="text-[9px] text-slate-400 uppercase tracking-widest font-bold mb-0.5">{txt.total}</p><p className="font-bold text-sm">Rp {grandTotal.toLocaleString()}</p></div></div>
                        <div className="flex items-center gap-2 font-bold text-xs tracking-widest uppercase">{txt.cart} <ChevronRight className="w-4 h-4" /></div>
                     </button>
                 </div>
               </div>
             )}
-            
-            {/* MODALS DI BAWAH INI */}
+
+            {/* ITEM DETAIL MODAL */}
             {selectedItem && (
               <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center">
-                <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl">
-                   <div className="flex justify-between items-start mb-6">
-                     <div><h2 className="text-2xl font-serif font-bold text-slate-900 mb-1">{selectedItem.name}</h2><p className="text-orange-600 font-bold text-lg">Rp {selectedItem.price.toLocaleString()}</p></div>
+                <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 animate-slide-up shadow-2xl max-h-[90vh] overflow-y-auto">
+                   <div className="flex justify-between items-start mb-4">
+                     <div className="max-w-[80%]"><h2 className="text-2xl font-serif font-bold text-slate-900 mb-1">{selectedItem.name}</h2><p className="text-orange-600 font-bold text-lg">{selectedItem.price === 0 ? txt.free : `Rp ${selectedItem.price.toLocaleString()}`}</p></div>
                      <button onClick={() => setSelectedItem(null)} className="p-2 bg-slate-100 rounded-full"><X className="w-6 h-6 text-slate-500" /></button>
                    </div>
-                   {selectedItem.allergens && (<div className="bg-orange-50 p-4 rounded-2xl mb-6 flex gap-3 items-start"><Info className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" /><div><p className="text-xs font-bold text-orange-800 uppercase tracking-wider mb-1">Contains Allergens</p><p className="text-xs text-orange-700">{selectedItem.allergens}</p></div></div>)}
-                   <div className="mb-8"><label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">{txt.addNote}</label><textarea className="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-2xl p-4 text-sm focus:outline-none focus:border-orange-500 transition-all" rows={3} placeholder="E.g. No onions, extra spicy..." value={itemNote} onChange={(e) => setItemNote(e.target.value)}></textarea></div>
+                   
+                   <p className="text-sm text-slate-500 mb-4">{selectedItem.description}</p>
+                   
+                   {selectedItem.allergens && (
+                    <div className="bg-amber-50 p-4 rounded-xl mb-6 flex gap-3 items-start border border-amber-100">
+                        <Info className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p className="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1">Contains Allergens</p>
+                            <p className="text-xs text-amber-700">{selectedItem.allergens}</p>
+                        </div>
+                    </div>
+                   )}
+
+                   <div className="mb-8">
+                        <textarea 
+                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500 transition-all" 
+                            rows={2} 
+                            placeholder="Notes (e.g. extra spicy, no onions)..." 
+                            value={itemNote} 
+                            onChange={(e) => setItemNote(e.target.value)}
+                        ></textarea>
+                   </div>
+
                    <div className="flex gap-4 items-center">
-                     <div className="flex items-center bg-slate-100 rounded-full p-1">
-                       <button onClick={() => setItemQty(Math.max(1, itemQty - 1))} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-slate-900 font-bold hover:bg-slate-50"><Minus className="w-4 h-4" /></button>
-                       <span className="w-12 text-center font-bold text-slate-900">{itemQty}</span>
-                       <button onClick={() => setItemQty(itemQty + 1)} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-slate-900 font-bold hover:bg-slate-50"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg></button>
+                     <div className="flex items-center bg-slate-100 rounded-full p-1 border border-slate-200">
+                       <button onClick={() => setItemQty(Math.max(1, itemQty - 1))} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-slate-50 text-slate-900"><Minus className="w-4 h-4" /></button>
+                       <span className="w-12 text-center font-bold text-slate-900 text-sm">{itemQty}</span>
+                       <button onClick={() => setItemQty(itemQty + 1)} className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-slate-50 text-slate-900"><Plus className="w-4 h-4" /></button>
                      </div>
-                     <button onClick={addItemToCart} className="flex-1 bg-slate-900 text-white py-4 rounded-full font-bold text-sm shadow-xl hover:bg-slate-800 active:scale-95 transition-all">Add to Cart - Rp {(selectedItem.price * itemQty).toLocaleString()}</button>
+                     <button onClick={addItemToCart} className="flex-1 bg-slate-900 text-white py-4 rounded-full font-bold text-sm shadow-xl active:scale-95 transition-transform">Add - {selectedItem.price === 0 ? txt.free : `Rp ${(selectedItem.price * itemQty).toLocaleString()}`}</button>
                    </div>
                 </div>
               </div>
@@ -367,20 +731,23 @@ export default function App() {
             {showCartModal && (
               <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end animate-fade-in justify-center">
                  <div className="bg-white w-full max-w-md rounded-t-[2.5rem] p-8 max-h-[85vh] overflow-y-auto animate-slide-up shadow-2xl">
-                   <div className="flex justify-between items-center mb-8"><h2 className="text-2xl font-serif font-bold text-slate-900">{txt.cart}</h2><button onClick={() => setShowCartModal(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-all"><X className="w-6 h-6 text-slate-400" /></button></div>
-                   <div className="space-y-6 mb-8">
+                   <div className="flex justify-between items-center mb-8"><h2 className="text-xl font-serif font-bold text-slate-900">{txt.cart}</h2><button onClick={() => setShowCartModal(false)} className="p-2 bg-slate-50 rounded-full"><X className="w-5 h-5 text-slate-400" /></button></div>
+                   <div className="space-y-4 mb-8">
                      {cart.map((item: any, idx: number) => (
-                       <div key={idx} className="flex justify-between items-start border-b border-slate-50 pb-4 last:border-0">
-                          <div className="flex items-start gap-4">
-                            <div className="w-16 h-16 rounded-2xl bg-slate-100 overflow-hidden shadow-sm"><img src={item.image} className="w-full h-full object-cover" /></div>
-                            <div><h4 className="font-bold text-slate-900 text-sm mb-1">{item.name} <span className="text-slate-400 text-xs">x{item.qty}</span></h4><p className="text-xs font-bold text-orange-600">Rp {(item.price * item.qty).toLocaleString()}</p>{item.note && <p className="text-[10px] text-slate-400 mt-1 italic bg-slate-50 px-2 py-1 rounded-md inline-block">" {item.note} "</p>}</div>
+                       <div key={idx} className="flex justify-between items-start border-b border-slate-50 pb-4">
+                          <div className="flex items-start gap-3">
+                            <div className="w-14 h-14 rounded-xl bg-slate-100 overflow-hidden"><img src={item.image} className="w-full h-full object-cover" /></div>
+                            <div>
+                                <h4 className="font-bold text-slate-900 text-sm">{item.name} <span className="text-slate-400 text-xs">x{item.qty}</span></h4>
+                                <p className="text-xs font-bold text-orange-600">{item.price === 0 ? txt.free : `Rp ${(item.price * item.qty).toLocaleString()}`}</p>
+                                {item.note && <p className="text-[10px] text-slate-500 italic mt-1">"{item.note}"</p>}
+                            </div>
                           </div>
-                          <button onClick={() => removeFromCart(idx)} className="text-red-500 bg-red-50 px-3 py-1.5 rounded-full text-[10px] font-bold hover:bg-red-100 transition-colors">Remove</button>
+                          <button onClick={() => removeFromCart(idx)} className="text-red-400 text-xs font-bold">Remove</button>
                        </div>
                      ))}
                    </div>
-                   <div className="bg-slate-50 rounded-2xl p-6 mb-6"><div className="flex justify-between text-lg font-bold text-slate-900"><span>Total Payment</span><span>Rp {grandTotal.toLocaleString()}</span></div></div>
-                   <button onClick={() => { setShowCartModal(false); setView('checkout'); }} className="w-full bg-orange-600 text-white py-4 rounded-2xl font-bold text-sm shadow-xl shadow-orange-500/30 hover:bg-orange-700 active:scale-95 transition-all uppercase tracking-widest flex justify-center items-center gap-2">{txt.checkout}</button>
+                   <button onClick={() => { setShowCartModal(false); setView('checkout'); }} className="w-full bg-orange-600 text-white py-4 rounded-2xl font-bold text-sm shadow-xl uppercase tracking-widest">{txt.checkout}</button>
                  </div>
               </div>
             )}
@@ -401,65 +768,98 @@ export default function App() {
 
             <div className="p-6 space-y-6">
               <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-                <h3 className="font-bold text-slate-900 mb-4">{txt.payment}</h3>
-                <div className="space-y-3">
-                  <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'room' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
-                    <input type="radio" name="payment" className="hidden" checked={paymentMethod === 'room'} onChange={() => setPaymentMethod('room')} />
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === 'room' ? 'border-orange-500' : 'border-slate-300'}`}>{paymentMethod === 'room' && <div className="w-2.5 h-2.5 bg-orange-500 rounded-full"></div>}</div>
-                    <Building2 className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm font-bold text-slate-700">Charge to Room ({roomNumber})</span>
-                  </label>
-                  <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'qris' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
-                    <input type="radio" name="payment" className="hidden" checked={paymentMethod === 'qris'} onChange={() => setPaymentMethod('qris')} />
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === 'qris' ? 'border-orange-500' : 'border-slate-300'}`}>{paymentMethod === 'qris' && <div className="w-2.5 h-2.5 bg-orange-500 rounded-full"></div>}</div>
-                    <QrCode className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm font-bold text-slate-700">QRIS / E-Wallet</span>
-                  </label>
-                  <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'bank' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
-                    <input type="radio" name="payment" className="hidden" checked={paymentMethod === 'bank'} onChange={() => setPaymentMethod('bank')} />
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === 'bank' ? 'border-orange-500' : 'border-slate-300'}`}>{paymentMethod === 'bank' && <div className="w-2.5 h-2.5 bg-orange-500 rounded-full"></div>}</div>
-                    <CreditCard className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm font-bold text-slate-700">Virtual Account</span>
-                  </label>
-                </div>
-                {paymentMethod === 'qris' && (<div className="mt-4 p-4 bg-white border border-slate-200 rounded-xl flex flex-col items-center text-center animate-fade-in"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" className="w-32 h-32 opacity-80" /><p className="text-[10px] text-slate-400 mt-2">Scan to Pay</p></div>)}
-                {paymentMethod === 'bank' && (
-                  <div className="mt-2 pl-9 w-full animate-fade-in">
-                    <p className="text-[10px] text-slate-500 font-bold mb-2 uppercase tracking-wider">Select Bank:</p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {BANKS.map((bank) => (
-                        <button key={bank.id} onClick={() => setSelectedBank(bank.id)} className={`p-2 rounded-lg border text-xs font-bold transition-all ${selectedBank === bank.id ? 'bg-orange-600 text-white border-orange-600' : 'bg-white text-slate-600 border-slate-200 hover:border-orange-300'}`}>{bank.name}</button>
-                      ))}
-                    </div>
-                    {selectedBank && (
-                      <div className="mt-3 bg-white border border-slate-200 rounded-xl p-3 text-center">
-                        <p className="text-[10px] text-slate-400">Virtual Account Number:</p>
-                        <p className="text-lg font-bold text-slate-900 font-mono tracking-widest">{BANKS.find(b => b.id === selectedBank)?.code}{phoneNumber}</p>
-                        <p className="text-[9px] text-orange-500 font-bold mt-1">Automatic Verification</p>
-                      </div>
-                    )}
-                  </div>
-                )}
+                 <h3 className="font-bold text-slate-900 mb-4">Payment Method</h3>
+                 <div className="space-y-3">
+                    {/* OPTION 1: Room Charge */}
+                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'room' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
+                        <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'room'} onChange={() => setPaymentMethod('room')} />
+                        <Building2 className={`w-5 h-5 ${paymentMethod === 'room' ? 'text-orange-600' : 'text-slate-400'}`} />
+                        <span className="font-bold text-sm text-slate-900">Charge to Room</span>
+                    </label>
+
+                    {/* OPTION 2: QRIS */}
+                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'qris' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
+                        <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'qris'} onChange={() => setPaymentMethod('qris')} />
+                        <QrCode className={`w-5 h-5 ${paymentMethod === 'qris' ? 'text-orange-600' : 'text-slate-400'}`} />
+                        <span className="font-bold text-sm text-slate-900">QRIS / E-Wallet</span>
+                    </label>
+
+                    {/* OPTION 3: Transfer */}
+                    <label className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'bank' ? 'border-orange-500 bg-orange-50' : 'border-slate-100'}`}>
+                        <input type="radio" name="pay" className="hidden" checked={paymentMethod === 'bank'} onChange={() => setPaymentMethod('bank')} />
+                        <CreditCard className={`w-5 h-5 ${paymentMethod === 'bank' ? 'text-orange-600' : 'text-slate-400'}`} />
+                        <span className="font-bold text-sm text-slate-900">Bank Transfer</span>
+                    </label>
+                 </div>
+
+                 {paymentMethod === 'bank' && (
+                     <div className="mt-4 animate-fade-in pl-2">
+                         <p className="text-xs font-bold text-slate-400 uppercase mb-2">Select Bank</p>
+                         <div className="flex gap-2 mb-4">
+                             {BANKS.map(bank => (
+                                 <button key={bank.id} onClick={() => setSelectedBank(bank.id)} className={`px-4 py-2 rounded-lg border text-xs font-bold ${selectedBank === bank.id ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200'}`}>{bank.name}</button>
+                             ))}
+                         </div>
+                         {selectedBank && (
+                             <div className="bg-slate-50 p-3 rounded-lg text-center mb-4 border border-slate-200">
+                                 <p className="text-xs text-slate-500">Virtual Account Number</p>
+                                 <p className="text-lg font-mono font-bold text-slate-900">{BANKS.find(b => b.id === selectedBank)?.code}{phoneNumber}</p>
+                             </div>
+                         )}
+                     </div>
+                 )}
+
+                 {paymentMethod === 'qris' && (
+                     <div className="mt-4 animate-fade-in bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center text-center">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" className="w-32 h-32 opacity-80 mix-blend-multiply" />
+                         <p className="text-[10px] text-slate-400 mt-2">Scan to Pay</p>
+                     </div>
+                 )}
+
+                 {(paymentMethod === 'qris' || (paymentMethod === 'bank' && selectedBank)) && (
+                     <div className="mt-4 pt-4 border-t border-slate-100 animate-fade-in">
+                         <p className="text-xs font-bold text-slate-900 mb-2">Upload Payment Proof</p>
+                         <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
+                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                 {transferProof ? (
+                                     <div className="flex items-center gap-2 text-green-600">
+                                         <CheckCircle2 className="w-5 h-5" />
+                                         <p className="text-xs font-bold">{transferProof.name}</p>
+                                     </div>
+                                 ) : (
+                                     <>
+                                         <Upload className="w-6 h-6 text-slate-400 mb-1" />
+                                         <p className="text-[10px] text-slate-500">Click to upload screenshot</p>
+                                     </>
+                                 )}
+                             </div>
+                             <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
+                         </label>
+                     </div>
+                 )}
               </div>
 
               <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-                <h3 className="font-bold text-slate-900 mb-4">{txt.summary}</h3>
-                <div className="space-y-4 mb-6 border-b border-slate-100 pb-6">
-                  {cart.map((item: any, idx: number) => (
-                    <div key={idx} className="flex justify-between text-sm"><span className="text-slate-600">{item.qty}x {item.name}</span><span className="font-bold">Rp {(item.price * item.qty).toLocaleString()}</span></div>
-                  ))}
-                </div>
+                <h3 className="font-bold text-slate-900 mb-4">Summary</h3>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between text-slate-500"><span>{txt.subtotal}</span><span>Rp {subtotal.toLocaleString()}</span></div>
-                  <div className="flex justify-between text-slate-500"><span>{txt.tax}</span><span>Rp {taxService.toLocaleString()}</span></div>
-                  <div className="flex justify-between text-lg font-bold text-slate-900 mt-4 pt-4 border-t border-slate-100"><span>{txt.total}</span><span>Rp {grandTotal.toLocaleString()}</span></div>
+                  <div className="flex justify-between text-slate-500"><span>Subtotal</span><span>Rp {subtotal.toLocaleString()}</span></div>
+                  <div className="flex justify-between text-slate-500"><span>Service & Tax (21%)</span><span>Rp {taxService.toLocaleString()}</span></div>
+                  <div className="flex justify-between text-lg font-bold text-slate-900 mt-4 pt-4 border-t border-slate-100"><span>Total</span><span>Rp {grandTotal.toLocaleString()}</span></div>
                 </div>
               </div>
             </div>
 
             <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center pointer-events-none">
                <div className="w-full max-w-md px-6 pointer-events-auto">
-                   <button onClick={handleOrder} disabled={loading || (paymentMethod === 'bank' && !selectedBank)} className={`w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-sm shadow-xl active:scale-95 transition-all flex justify-center items-center gap-2 ${loading || (paymentMethod === 'bank' && !selectedBank) ? 'bg-slate-300 cursor-not-allowed' : ''}`}>{loading ? <span className="animate-spin">⏳</span> : txt.placeOrder}</button>
+                   <button 
+                    onClick={handleOrder} 
+                    disabled={loading || (paymentMethod !== 'room' && !transferProof)} 
+                    className={`w-full py-4 rounded-2xl font-bold text-sm shadow-xl flex justify-center items-center gap-2 transition-all 
+                        ${loading || (paymentMethod !== 'room' && !transferProof) ? 'bg-slate-300 text-white cursor-not-allowed' : 'bg-slate-900 text-white'}`
+                    }
+                   >
+                       {loading ? 'Processing...' : (paymentMethod !== 'room' && !transferProof ? 'Upload Proof to Continue' : txt.placeOrder)}
+                   </button>
                </div>
             </div>
         </div>
@@ -467,15 +867,70 @@ export default function App() {
     );
   }
 
-  // --- VIEW 4: SUCCESS ---
-  if (view === 'success') {
+  // --- VIEW 4: TRACKING ---
+  if (view === 'tracking') {
+    const steps = [
+        { icon: <CheckCircle2 className="w-5 h-5" />, label: "Order Confirmed", sub: "We have received your request." },
+        { icon: <Clock className="w-5 h-5" />, label: "Kitchen Preparing", sub: "Chef is cooking your meal." },
+        { icon: <Bell className="w-5 h-5" />, label: "On the Way", sub: "Staff is heading to Room " + roomNumber },
+        { icon: <Star className="w-5 h-5" />, label: "Delivered", sub: "Service completed. Bon Appetit!" }
+    ];
+
     return (
-      <div className="fixed inset-0 w-full h-[100dvh] flex flex-col justify-center items-center p-6 font-sans bg-green-50 overflow-hidden">
-        <div className="w-full max-w-md flex flex-col items-center justify-center">
-            <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-green-200 shadow-2xl mb-8 animate-bounce"><Star className="w-12 h-12 text-white fill-white" /></div>
-            <h2 className="text-3xl font-serif font-bold text-slate-900 mb-3">{txt.successTitle}</h2>
-            <p className="text-slate-500 mb-10 leading-relaxed max-w-xs mx-auto text-center">{txt.successMsg}</p>
-            <button onClick={() => setView('login')} className="px-10 py-4 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm uppercase tracking-widest">{txt.back}</button>
+      <div className="min-h-screen bg-slate-50 font-sans flex justify-center overflow-hidden">
+        <div className="w-full max-w-md bg-white min-h-screen shadow-2xl relative flex flex-col">
+            
+            <div className="h-1/3 bg-slate-900 relative overflow-hidden flex items-center justify-center">
+                <div className="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg')] bg-cover"></div>
+                <div className="relative z-10 text-center">
+                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-[0_0_40px_rgba(34,197,94,0.6)]">
+                        <Clock className="w-10 h-10 text-white" />
+                    </div>
+                    <h2 className="text-white font-serif text-2xl font-bold">{txt.trackTitle}</h2>
+                    <p className="text-white/60 text-xs tracking-widest uppercase mt-1">Est. Time: 20-30 Mins</p>
+                </div>
+            </div>
+
+            <div className="flex-1 p-8 -mt-6 bg-white rounded-t-[2.5rem] relative z-20">
+                <div className="space-y-8 mt-4">
+                    {steps.map((step, idx) => (
+                        <div key={idx} className={`flex gap-4 relative ${idx <= orderStatus ? 'opacity-100' : 'opacity-30 grayscale'}`}>
+                            {idx !== steps.length - 1 && (
+                                <div className={`absolute left-[19px] top-8 bottom-[-24px] w-0.5 ${idx < orderStatus ? 'bg-green-500' : 'bg-slate-200'}`}></div>
+                            )}
+                            <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center border-2 z-10 bg-white ${idx <= orderStatus ? 'border-green-500 text-green-600 shadow-lg shadow-green-100' : 'border-slate-200 text-slate-300'}`}>
+                                {step.icon}
+                            </div>
+                            <div className={`${idx === orderStatus ? 'scale-105 transition-transform origin-left' : ''}`}>
+                                <h4 className={`font-bold text-sm ${idx <= orderStatus ? 'text-slate-900' : 'text-slate-400'}`}>{step.label}</h4>
+                                <p className="text-xs text-slate-500 leading-tight mt-1">{step.sub}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {showRatingModal && (
+                <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 animate-fade-in">
+                    <div className="bg-white w-full max-w-xs rounded-3xl p-6 text-center animate-slide-up">
+                        <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
+                        </div>
+                        <h3 className="font-serif font-bold text-xl text-slate-900 mb-2">{txt.rateTitle}</h3>
+                        <p className="text-slate-500 text-xs mb-6">{txt.rateDesc}</p>
+                        
+                        <div className="flex justify-center gap-2 mb-8">
+                            {[1,2,3,4,5].map(s => (
+                                <button key={s} onClick={() => setUserRating(s)} className="focus:outline-none transition-transform hover:scale-110">
+                                    <Star className={`w-8 h-8 transition-colors ${s <= userRating ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200'}`} />
+                                </button>
+                            ))}
+                        </div>
+                        
+                        <button onClick={handleFinish} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm shadow-lg active:scale-95 transition-transform">{txt.submit}</button>
+                    </div>
+                </div>
+            )}
         </div>
       </div>
     );
