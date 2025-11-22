@@ -594,7 +594,7 @@ export default function App() {
 
           <div className="text-center mb-8 animate-fade-in-up">
              <img src="https://i.ibb.co.com/JFzbjBqz/Logo-ciputra-copy.png" className="w-28 h-auto mx-auto mb-5 object-contain drop-shadow-2xl opacity-95" alt="Logo" />
-             <h1 className="text-3xl font-serif text-white drop-shadow-lg tracking-wide mb-2">The Gallery</h1>
+             <h1 className="text-3xl font-serif text-white drop-shadow-lg tracking-wide mb-2">The Gallery Restaurant</h1>
              <p className="text-white/80 text-xs mt-2 font-serif italic">"{txt.subtitle}"</p>
           </div>
 
